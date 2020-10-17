@@ -5,7 +5,7 @@
 
 ## Note
 This template deploys and onboard a single MetaPort Connector into a private subnet.
-For a successful onboard outbound internet connectivity must be in place.
+For a successful onboard outbound internet connectivity must be in place via an existing NAT Gateway.
 
 ## Pre-Requisite
-Plese note: This deployment template creates and attach an existing Network Security Group to the virtual machine. 
+Plese note: This deployment template creates and attach an existing Network Security Group to the virtual machine, in order to allow connectivity to the Proofpoint Meta Cloud. 

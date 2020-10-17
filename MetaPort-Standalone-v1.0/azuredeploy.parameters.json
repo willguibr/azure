@@ -11,7 +11,7 @@
     "metaTokenCode": {
       "value": "GEN-PASSWORD"
     },
-    "vmSize": {
+    "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
     "adminPasswordOrKey": {

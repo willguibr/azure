@@ -14,11 +14,15 @@
         "description": "This is the username you wish to assign to your VMs admin account"
       }
     },
-    "vmSize": {
+    "virtualMachineSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
+      "allowedValues": [
+        "Standard_DS4_v2",
+        "Standard_DS5_v2"
+      ], 
       "metadata": {
-        "description": "Size of VM"
+        "description": "Virtual Machine Size"
       }
     },
     "virtualNetworkName": {
@@ -205,7 +209,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('vmSize')]"
+          "virtualMachineSize": "[parameters('virtualMachineSize')]"
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
