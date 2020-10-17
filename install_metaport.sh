@@ -4,4 +4,5 @@ sudo wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/met
 sudo chmod +x build/build_mp.sh
 sudo ./build/build_mp.sh
 sleep 1m
-su mpadmin -c "metaport onboard ${metaTokenCode}"
+metaTokenCode=$1
+su mpadmin -c "metaport onboard $metaTokenCode"
