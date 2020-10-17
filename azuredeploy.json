@@ -240,7 +240,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://meta-amis.s3.ca-central-1.amazonaws.com/latest/install_metaport.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/install_metaport.sh"
           ]
         },
         "protectedSettings": {
