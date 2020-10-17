@@ -125,6 +125,58 @@
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }
+          },
+          {
+            "name": "Outbound-HTTPS-Traffic",
+            "properties": {
+              "priority": 2000,
+              "access": "Allow",
+              "direction": "Outbound",
+              "destinationPortRange": "443",
+              "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "Outbound-IKE-Traffic",
+            "properties": {
+              "priority": 2001,
+              "access": "Allow",
+              "direction": "Outbound",
+              "destinationPortRange": "500",
+              "protocol": "Udp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "Outbound-NATT-Traffic",
+            "properties": {
+              "priority": 2002,
+              "access": "Allow",
+              "direction": "Outbound",
+              "destinationPortRange": "4500",
+              "protocol": "Udp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "Outbound-ICMP-Traffic",
+            "properties": {
+              "priority": 2003,
+              "access": "Allow",
+              "direction": "Outbound",
+              "destinationPortRange": "*",
+              "protocol": "Icmp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
           }
         ]
       }
