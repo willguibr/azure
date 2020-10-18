@@ -11,9 +11,6 @@
     "vmName": {
       "value": "GEN-UNIQUE-10"
     },
-    "virtualMachineNamePrefix": {
-      "value": "MPVM0"
-    },
     "vmSize": {
       "value": "Standard_D2s_v3"
     },

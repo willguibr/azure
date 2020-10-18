@@ -12,25 +12,14 @@
             "type": "int",
             "defaultValue": 2,
             "minValue": 2,
-            "maxValue": 3,
+            "maxValue": 5,
             "metadata": {
                 "description": "Number of VMs to deploy, limit 5 since this sample is using a single storage account"
-            }
-        },
-        "virtualMachineNamePrefix": {
-            "defaultValue": "MPVM0",
-            "type": "string",
-            "maxLength": 15,
-            "metadata": {
-                "description": "Name of the virtual machine to be created"
             }
         },
         "OS": {
             "type": "string",
             "defaultValue": "Ubuntu",
-            "allowedValues": [
-                "Ubuntu"
-            ],
             "metadata": {
                 "description": "OS Platform for the VM"
             }
@@ -63,7 +52,7 @@
             "type": "string",
             "defaultValue": "Standard_D2s_v3",
             "allowedValues": [
-                "Standard_D2s_v3",
+               "Standard_D2s_v3",
                 "Standard_DS4_v2",
                 "Standard_DS5_v2"
             ],
@@ -72,16 +61,16 @@
             }
         },
         "MP1TokenCode": {
-        "type": "securestring",
-        "metadata": {
-            "description": "MetaPort Token Code"
-        }
-    },
+            "type": "securestring",
+            "metadata": {
+                "description": "MetaPort1 Token Code"
+            }
+        },
         "MP2TokenCode": {
-        "type": "securestring",
-        "metadata": {
-            "description": "MetaPort Token Code"
-        }
+            "type": "securestring",
+            "metadata": {
+                "description": "MetaPort1 Token Code"
+            }
         }
     },
     "variables": {
@@ -99,22 +88,19 @@
                 "version": "latest"
             }
         },
-        "networkSecurityGroupName": "default-NSG",
-        "nsgOsPort": {
-            "Ubuntu": "22"
-        },
-        "linuxConfiguration": {
-            "disablePasswordAuthentication": true,
-            "ssh": {
-                "publicKeys": [
-                    {
-                        "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
-                        "keyData": "[parameters('adminPasswordOrKey')]"
-                    }
-                ]
-            }
-        }
+    "linuxConfiguration": {
+      "disablePasswordAuthentication": true,
+      "ssh": {
+        "publicKeys": [
+          {
+            "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+            "keyData": "[parameters('adminPasswordOrKey')]"
+          }
+        ]
+      }
     },
+    "networkSecurityGroupName": "default-NSG"
+  },
     "resources": [
         {
             "type": "Microsoft.Compute/availabilitySets",
@@ -138,13 +124,52 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "[concat('default-allow-', variables('nsgOsPort')[parameters('OS')])]",
+                        "name": "Inbound-SSH-Traffic",
                         "properties": {
                             "priority": 1000,
                             "access": "Allow",
                             "direction": "Inbound",
-                            "destinationPortRange": "[variables('nsgOsPort')[parameters('OS')]]",
+                            "destinationPortRange": "22",
                             "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "Outbound-HTTPS-Traffic",
+                        "properties": {
+                            "priority": 2000,
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "destinationPortRange": "443",
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "Outbound-IKE-Traffic",
+                        "properties": {
+                            "priority": 2001,
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "destinationPortRange": "500",
+                            "protocol": "Udp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "Outbound-NATT-Traffic",
+                        "properties": {
+                            "priority": 2002,
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "destinationPortRange": "4500",
+                            "protocol": "Udp",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*"
@@ -208,7 +233,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1))]",
+            "name": "[concat('myvm', copyIndex())]",
             "apiVersion": "2020-06-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -226,7 +251,7 @@
                     "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "[concat(parameters('virtualMachineNamePrefix'), copyIndex())]",
+                    "computerName": "[concat('vm', copyIndex())]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPasswordOrKey')]",
                     "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
@@ -248,11 +273,11 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('virtualMachineNamePrefix'),'/newuserscript')]",
+      "name": "MyCustomScriptExtension",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', parameters('virtualMachineNamePrefix'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', concat('myvm', copyIndex()))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
