@@ -11,7 +11,7 @@
     "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
-    "webservername": {
+    "WebServerName": {
       "value": "GEN-UNIQUE-10"
     },
     "mySqlPassword": {
@@ -23,7 +23,7 @@
     "adminPasswordOrKey": {
       "value": "GEN-SSH-PUB-KEY"
     },
-      "metaportvmname": {
+      "MetaportName": {
         "value": "GEN-UNIQUE-10"
     },
     "metaTokenCode": {

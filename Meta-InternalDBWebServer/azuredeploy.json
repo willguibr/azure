@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "webservername": {
+    "WebServerName": {
       "type": "string",
       "metadata": {
         "description": "This is the unique DNS name of the for the public IP for your VM"
@@ -14,7 +14,7 @@
         "description": "Password for your mySQL account"
       }
     },
-    "metaportvmname": {
+    "MetaportName": {
       "type": "string",
       "metadata": {
         "description": "This is the unique DNS name of the for the public IP for your VM"
@@ -147,7 +147,7 @@
     "imageOffer": "UbuntuServer",
     "storageAccountType": "Standard_LRS",
     "webservername": "[parameters('webservername')]",
-    "metaportvmname": "[parameters('metaportvmname')]",
+    "MetaportName": "[parameters('MetaportName')]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -295,7 +295,7 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('webservername')]",
+      "name": "[variables('WebServerName')]",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
       "dependsOn": [
@@ -306,7 +306,7 @@
           "vmSize": "[parameters('virtualMachineSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('webservername')]",
+          "computerName": "[variables('WebServerName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPasswordOrKey')]",
           "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
@@ -319,7 +319,7 @@
             "version": "[variables('imageVersion')]"
           },
           "osDisk": {
-            "name": "[concat(variables('webservername'), '_OSDisk')]",
+            "name": "[concat(variables('WebServerName'), '_OSDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "managedDisk": {
@@ -338,7 +338,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('metaportvmname')]",
+      "name": "[variables('MetaportName')]",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
       "dependsOn": [
@@ -349,7 +349,7 @@
           "vmSize": "[parameters('virtualMachineSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('metaportvmname')]",
+          "computerName": "[variables('MetaportName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPasswordOrKey')]",
           "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
@@ -362,7 +362,7 @@
             "version": "[variables('imageVersion')]"
           },
           "osDisk": {
-            "name": "[concat(variables('metaportvmname'), '_OSDisk')]",
+            "name": "[concat(variables('MetaportName'), '_OSDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "managedDisk": {
@@ -509,11 +509,11 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('metaportvmname'),'/newuserscript')]",
+      "name": "[concat(variables('MetaportName'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('metaportvmname'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('MetaportName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
@@ -528,11 +528,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('webservername'),'/newuserscript')]",
+      "name": "[concat(variables('WebServerName'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('webservername'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('WebServerName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
