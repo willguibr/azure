@@ -11,7 +11,7 @@
     "adminPasswordOrKey": {
       "value": "GEN-SSH-PUB-KEY"
     },
-    "vmSize": {
+    "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
     "virtualNetworkName": {
