@@ -8,6 +8,12 @@
         "description": "This is the unique DNS name of the for the public IP for your VM"
       }
     },
+    "mySqlPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for your mySQL account"
+      }
+    },
     "metaportvmname": {
       "type": "string",
       "metadata": {
@@ -515,7 +521,7 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-v2.0/install_metaport.sh"],
+          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/Meta-InternalDBWebServer/scripts/install_metaport.sh"],
           "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
         }
       }
@@ -534,8 +540,8 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-v2.0/install_metaport.sh"],
-          "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
+          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/Meta-InternalDBWebServer/scripts/install_wordpress.sh"],
+          "commandToExecute": "[concat('sh install_wordpress.sh ', parameters('mySqlPassword'))]"
         }
       }
     }
