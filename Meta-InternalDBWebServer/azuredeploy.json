@@ -32,7 +32,7 @@
         "description": "Virtual Machine Size"
       }
     },
-      "vnetname": {
+      "vnetName": {
           "defaultValue": "myVnet",
           "type": "String",
           "metadata": {
