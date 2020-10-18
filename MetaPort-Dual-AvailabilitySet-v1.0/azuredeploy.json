@@ -276,9 +276,6 @@
       "name": "MyCustomScriptExtension",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', concat('myvm', copyIndex()))]"
-      ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
