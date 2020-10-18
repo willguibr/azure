@@ -258,7 +258,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/install_metaport.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-v2.0/install_metaport.sh"
           ]
         },
         "protectedSettings": {
