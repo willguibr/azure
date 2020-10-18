@@ -86,7 +86,6 @@
     },
     "variables": {
         "virtualNetworkName": "myVNET",
-        "virtualMachineNamePrefix": "virtualMachineNamePrefix",
         "addressPrefix": "10.0.0.0/16",
         "subnet1Name": "Subnet-1",
         "subnet1Prefix": "10.0.0.0/24",
@@ -249,11 +248,11 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('virtualMachineNamePrefix'),'/newuserscript')]",
+      "name": "[concat(parameters('virtualMachineNamePrefix'),'/newuserscript')]",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('virtualMachineNamePrefix'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', parameters('virtualMachineNamePrefix'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
