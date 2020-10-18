@@ -14,5 +14,5 @@
 
       <a href="https://github.com/willguibr/azure/blob/main/MetaPort-Standalone-v2.0/images/metaport-check.png">
          <img alt="Qries" src="https://github.com/willguibr/azure/blob/main/MetaPort-Standalone-v2.0/images/metaport-check.png"
-         width=150" height="70">
+         width=300" height="150">
       </a>
