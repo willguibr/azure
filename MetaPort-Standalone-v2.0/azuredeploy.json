@@ -21,7 +21,7 @@
         "Standard_D2s_v3",
         "Standard_DS4_v2",
         "Standard_DS5_v2"
-      ], 
+      ],
       "metadata": {
         "description": "Virtual Machine Size"
       }
