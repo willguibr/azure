@@ -124,7 +124,7 @@
         }
     },
   "variables": {
-    "vmName": "[parameters('vmName')]",
+    "mpvmnic1": "mpvmnic1",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -275,7 +275,7 @@
             "name": "[parameters('vmName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkinterfacename'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('mpvmnic1'))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -309,7 +309,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkinterfacename'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('mpvmnic1'))]"
                         }
                     ]
                 }
@@ -424,6 +424,25 @@
                 }
             }
         },
+    {
+      "apiVersion": "2020-05-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('mpvmnic1')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('vmName'),'/newuserscript')]",
