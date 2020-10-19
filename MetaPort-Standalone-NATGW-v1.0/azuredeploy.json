@@ -102,10 +102,11 @@
   "variables": {
     "nicName": "VMNic",
     "publicIpName": "[concat(parameters('natGatewayName'), 'ip')]",
-    "publicIpAddresses":
+    "publicIpAddresses": [
       {
-        "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpname'))]"
-      },
+        "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpName'))]"
+      }
+    ],
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
