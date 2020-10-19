@@ -7,7 +7,7 @@ This template deploys a single **MetaPort appliance**, a **NAT gateway** and vir
 
 ## Overview and deployed resources
 
-This template is a resource manager implementation of a quickstart for deploying a NAT gateway.  A virtual network is deployed with a single subnet. The NAT gateway resource is associated with this subnet. A single public IP resource is created for the NAT gateway.  
+This template is a resource manager implementation of a quickstart for deploying a standalone MetaPort Appliance on a private subnet, behind a NAT gateway. A virtual network is deployed with a single subnet. The NAT gateway resource is associated with this subnet. A single public IP resource is created for the NAT gateway.  
 
 For more information on **Virtual Network NAT** service and **NAT gateway** see:
 
