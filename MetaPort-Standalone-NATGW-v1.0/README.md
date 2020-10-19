@@ -31,4 +31,8 @@ Description
 + **virtualNetworks**: Virtual network for NAT gateway.
   + **subnets**: Subnet for virtual network for NAT gateway.
 
+      <a href="https://github.com/willguibr/azure/blob/main/MetaPort-Standalone-v2.0/images/metaport-check.png">
+         <img alt="Qries" src="https://github.com/willguibr/azure/blob/main/MetaPort-Standalone-v2.0/images/metaport-check.png">
+      </a>
+
 `Tags: virtual network, vnet, nat, nat gateway`
