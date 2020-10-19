@@ -5,20 +5,20 @@
     "vmName": {
       "value": "GEN-UNIQUE-10"
     },
+    "virtualMachineSize": {
+      "value": "Standard_D2s_v3"
+    },
+    "vnetname": {
+      "value": "GET-PREREQ-virtualNetworkName"
+    },
+    "subnetname": {
+      "value": "GET-PREREQ-subnet1Name"
+    },
     "adminUsername": {
       "value": "GEN-UNIQUE"
     },
     "adminPasswordOrKey": {
       "value": "GEN-SSH-PUB-KEY"
-    },
-    "vmSize": {
-      "value": "Standard_D2s_v3"
-    },
-    "vnetName": {
-      "value": "GET-PREREQ-virtualNetworkName"
-    },
-    "subnetName": {
-      "value": "GET-PREREQ-subnet1Name"
     },
     "metaTokenCode": {
       "value": "GEN-PASSWORD"
