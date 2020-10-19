@@ -1,5 +1,5 @@
 #!/bin/bash
-
+  
 apt-get -y update
 
 logger "Installing WordPress"
@@ -12,7 +12,7 @@ echo mysql-server-5.6 mysql-server/root_password password $dbpass | debconf-set-
 echo mysql-server-5.6 mysql-server/root_password_again password $dbpass | debconf-set-selections
 
 # Install the LAMP stack and WordPress
-apt-get -y install apache2 mysql-server php5 php5-mysql wordpress
+apt-get -y install apache2 mysql-server php php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip wordpress
 
 # Setup WordPress
 gzip -d /usr/share/doc/wordpress/examples/setup-mysql.gz
