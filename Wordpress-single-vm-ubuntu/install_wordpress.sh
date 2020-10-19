@@ -1,5 +1,5 @@
 #!/bin/bash
-  
+
 apt-get -y update
 
 logger "Installing WordPress"
