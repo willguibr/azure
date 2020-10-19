@@ -14,7 +14,7 @@
         "description": "This is the username you wish to assign to your VMs admin account"
       }
     },
-    "virtualMachineSize": {
+    "vmSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
       "allowedValues": [
@@ -162,7 +162,7 @@
     {
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2019-11-01",
-      "name": "[parameters('vnetname')]",
+      "name": "[parameters('vnetName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
@@ -325,7 +325,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('virtualMachineSize')]"
+          "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
