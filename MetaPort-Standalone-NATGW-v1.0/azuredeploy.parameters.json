@@ -14,10 +14,10 @@
     "vmSize": {
       "value": "Standard_D2s_v3"
     },
-    "virtualNetworkName": {
+    "vnetName": {
       "value": "GET-PREREQ-virtualNetworkName"
     },
-    "subnet1Name": {
+    "subnetName": {
       "value": "GET-PREREQ-subnet1Name"
     },
     "metaTokenCode": {
