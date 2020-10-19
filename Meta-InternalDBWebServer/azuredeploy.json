@@ -45,63 +45,63 @@
           "description": "Name of the virtual network"
           }
         },
-        "subnetname": {
+        "subnetName": {
             "defaultValue": "mySubnet",
             "type": "String",
             "metadata": {
                 "description": "Name of the subnet for virtual network"
             }
         },
-        "vnetaddressspace": {
+        "vnetAddressSpace": {
             "defaultValue": "192.168.0.0/16",
             "type": "String",
             "metadata": {
                 "description": "Address space for virtual network"
             }
         },
-        "vnetsubnetprefix": {
+        "vnetSubnetPrefix": {
             "defaultValue": "192.168.0.0/24",
             "type": "String",
             "metadata": {
                 "description": "Subnet prefix for virtual network"
             }
         },
-        "natgatewayname": {
+        "natGatewayName": {
             "defaultValue": "myNATgateway",
             "type": "String",
             "metadata": {
               "description": "Name of the NAT gateway"
             }
         },
-        "networkinterfacename": {
+        "networkInterfaceName": {
             "defaultValue": "myvmNIC",
             "type": "String",
             "metadata": {
               "description": "Name of the virtual machine nic"
             }
         },
-        "publicipname": {
+        "publicIPName": {
             "defaultValue": "myPublicIP",
             "type": "String",
             "metadata": {
               "description": "Name of the NAT gateway public IP"
             }
         },
-        "nsgname": {
+        "nsgName": {
             "defaultValue": "myVMnsg",
             "type": "String",
             "metadata": {
               "description": "Name of the virtual machine NSG"
             }
         },
-        "publicipvmname": {
+        "publicIPVMname": {
             "defaultValue": "myPublicIPVM",
             "type": "String",
             "metadata": {
               "description": "Name of the virtual machine public IP"
             }
         },
-        "publicipprefixname": {
+        "publicIPPrefixName": {
             "defaultValue": "myPublicIPPrefix",
             "type": "String",
             "metadata": {
