@@ -58,6 +58,13 @@
               "description": "Name of the virtual machine nic"
             }
         },
+        "mpvmnic1": {
+            "defaultValue": "mpvmnic1",
+            "type": "String",
+            "metadata": {
+              "description": "Name of the virtual machine nic"
+            }
+        },
         "publicipname": {
             "defaultValue": "myPublicIP",
             "type": "String",
@@ -124,7 +131,6 @@
         }
     },
   "variables": {
-    "mpvmnic1": "mpvmnic1",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -275,7 +281,7 @@
             "name": "[parameters('vmName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('mpvmnic1'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('mpvmnic1'))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -309,7 +315,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('mpvmnic1'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('mpvmnic1'))]"
                         }
                     ]
                 }
@@ -427,7 +433,7 @@
     {
       "apiVersion": "2020-05-01",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('mpvmnic1')]",
+      "name": "[parameters('mpvmnic1')]",
       "location": "[parameters('location')]",
       "properties": {
         "ipConfigurations": [
