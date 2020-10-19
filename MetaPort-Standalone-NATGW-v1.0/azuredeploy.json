@@ -170,7 +170,7 @@
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[parameters('vnetaddressspace')]"
+            "[parameters('vnetAddressSpace')]"
           ]
         },
         "subnets": [
