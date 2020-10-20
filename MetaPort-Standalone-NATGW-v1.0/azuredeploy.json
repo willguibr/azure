@@ -21,13 +21,6 @@
         "description": "Virtual Machine Size"
       }
     },
-    "storageAccountId": {
-      "defaultValue": "",
-      "metadata": {
-        "description": "The storage account Id for boot diagnostics for the VMs"
-      },
-      "type": "string"
-    },
     "virtualNetworkName": {
       "defaultValue": "myVnet",
       "type": "String",
@@ -133,9 +126,20 @@
       }
     },
     "networkSecurityGroupName": "default-NSG",
-    "enableBootDiags": "[not(equals(parameters('storageAccountId'), ''))]"
+    "storageAccountName": "[concat('store', uniquestring(resourceGroup().id))]"
   },
   "resources":  [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[variables('storageAccountType')]"
+      },
+      "kind": "StorageV2",
+      "properties": {}
+    },
     {
       "comments": "Default Network Security Group for template",
       "type": "Microsoft.Network/networkSecurityGroups",
@@ -290,8 +294,14 @@
           },
         "diagnosticsProfile": {
           "bootDiagnostics": {
-            "enabled": "[variables('enableBootDiags')]",
-            "storageUri": "[if(variables('enableBootDiags'), reference(parameters('storageAccountId'), '2018-02-01').primaryEndpoints.blob, json('null'))]"
+            "enabled": true,
+            "storageUri": "[
+              reference(
+                resourceId(
+                  'Microsoft.Storage/storageAccounts', variables('storageAccountName')
+                )
+              ).primaryEndpoints.blob
+            ]"
           }
         }
       }
@@ -398,5 +408,19 @@
         }
       }
     }
-  ]
+  ],
+  "outputs": {
+    "storageAccountName": {
+      "type": "string",
+      "value": "[variables('storageAccountName')]"
+    },
+    "adminUsername": {
+      "type": "string",
+      "value": "[parameters('adminUsername')]"
+    },
+    "hostname": {
+      "type": "string",
+      "value": "[reference(variables('MetaPortName')).dnsSettings.fqdn]"
+    }
+  }
 }
