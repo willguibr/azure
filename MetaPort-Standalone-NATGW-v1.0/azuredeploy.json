@@ -22,7 +22,7 @@
       }
     },
     "storageAccountId": {
-      "defaultValue": "true",
+      "defaultValue": "",
       "metadata": {
         "description": "The storage account Id for boot diagnostics for the VMs"
       },
