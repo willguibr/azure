@@ -21,6 +21,13 @@
         "description": "Virtual Machine Size"
       }
     },
+    "storageAccountId": {
+      "defaultValue": "",
+      "metadata": {
+        "description": "The storage account Id for boot diagnostics for the VMs"
+      },
+      "type": "string"
+    },
     "virtualNetworkName": {
       "defaultValue": "myVnet",
       "type": "String",
@@ -125,7 +132,8 @@
         ]
       }
     },
-    "networkSecurityGroupName": "default-NSG"
+    "networkSecurityGroupName": "default-NSG",
+    "enableBootDiags": "[not(equals(parameters('storageAccountId'), ''))]"
   },
   "resources":  [
     {
@@ -273,12 +281,18 @@
             }
           }
         },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
-            }
-          ]
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+              }
+            ]
+          },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "[variables('enableBootDiags')]",
+            "storageUri": "[if(variables('enableBootDiags'), reference(parameters('storageAccountId'), '2018-02-01').primaryEndpoints.blob, json('null'))]"
+          }
         }
       }
     },
