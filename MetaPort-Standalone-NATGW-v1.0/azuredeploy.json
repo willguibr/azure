@@ -414,7 +414,7 @@
     },
     "hostname": {
       "type": "string",
-      "value": "[reference(variables('MetaPortName')).dnsSettings.fqdn]"
+      "value": "[reference(variables('MetaPortName'))]"
     }
   }
 }

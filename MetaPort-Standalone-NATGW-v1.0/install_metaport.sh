@@ -14,3 +14,7 @@ metaTokenCode=$1
 
 # Initiating Onboarding Process
 su mpadmin -c "metaport onboard $metaTokenCode"
+
+# Reboot after onboard
+reboot
+
