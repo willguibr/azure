@@ -125,21 +125,9 @@
         ]
       }
     },
-    "networkSecurityGroupName": "default-NSG",
-    "storageAccountName": "[concat('store', uniquestring(resourceGroup().id))]"
+    "networkSecurityGroupName": "default-NSG"
   },
   "resources":  [
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2019-06-01",
-      "name": "[variables('storageAccountName')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[variables('storageAccountType')]"
-      },
-      "kind": "StorageV2",
-      "properties": {}
-    },
     {
       "comments": "Default Network Security Group for template",
       "type": "Microsoft.Network/networkSecurityGroups",
@@ -291,12 +279,6 @@
                 "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
               }
             ]
-          },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": true,
-            "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').primaryEndpoints.blob]"
-          }
         }
       }
     },
@@ -406,10 +388,6 @@
     }
   ],
   "outputs": {
-    "storageAccountName": {
-      "type": "string",
-      "value": "[variables('storageAccountName')]"
-    },
     "adminUsername": {
       "type": "string",
       "value": "[parameters('adminUsername')]"
