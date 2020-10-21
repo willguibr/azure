@@ -2,12 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "adminUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "Admin username for VM"
-            }
-        },
         "numberOfInstances": {
             "type": "int",
             "defaultValue": 2,
@@ -22,6 +16,24 @@
             "defaultValue": "Ubuntu",
             "metadata": {
                 "description": "OS Platform for the VM"
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3",
+            "allowedValues": [
+               "Standard_D2s_v3",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2"
+            ],
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Admin username for VM"
             }
         },
         "location": {
@@ -48,18 +60,7 @@
                 "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
             }
         },
-        "vmSize": {
-            "type": "string",
-            "defaultValue": "Standard_D2s_v3",
-            "allowedValues": [
-               "Standard_D2s_v3",
-                "Standard_DS4_v2",
-                "Standard_DS5_v2"
-            ],
-            "metadata": {
-                "description": "description"
-            }
-        },
+
         "MP1TokenCode": {
             "type": "securestring",
             "metadata": {
@@ -273,11 +274,11 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/newuserscript')]",
+      "name": "[concat('myvm','/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', concat('myvm'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
