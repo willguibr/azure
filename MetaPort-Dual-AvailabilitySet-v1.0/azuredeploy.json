@@ -273,16 +273,16 @@
             }
         },
     {
+      "name": "CustomScriptExtension",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "MetaCustomScript",
       "apiVersion": "2020-06-01",
-      "location": "[parameters('location')]",
+      "location": "[ResourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/myvm', copyindex())]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
+        "type": "CustomScriptExtension",
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
