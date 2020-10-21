@@ -11,13 +11,6 @@
                 "description": "Number of VMs to deploy, limit 5 since this sample is using a single storage account"
             }
         },
-        "OS": {
-            "type": "string",
-            "defaultValue": "Ubuntu",
-            "metadata": {
-                "description": "OS Platform for the VM"
-            }
-        },
         "vmSize": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3",
@@ -70,12 +63,12 @@
         "MP2TokenCode": {
             "type": "securestring",
             "metadata": {
-                "description": "MetaPort1 Token Code"
+                "description": "MetaPort2 Token Code"
             }
         }
     },
     "variables": {
-        "vmName": "vmName",
+        "VMSSPrefix": "metaport",
         "virtualNetworkName": "myVNET",
         "addressPrefix": "10.0.0.0/16",
         "subnet1Name": "Subnet-1",
@@ -275,11 +268,11 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat(variables('vmName'),'/newuserscript')]",
+        "name": "[concat(variables('VMSSPrefix'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[ResourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('VMSSPrefix'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
