@@ -75,6 +75,9 @@
         "subnet1Prefix": "10.0.0.0/24",
         "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),variables('subnet1Name'))]",
         "availabilitySetName": "myAvSet",
+        "VMSSName": {
+            "value": "[concat(variables('VMSSPrefix'), padLeft(copyindex(), 2, '0'))]"
+          },
         "imageReference": {
             "Ubuntu": {
                 "publisher": "Canonical",
@@ -268,11 +271,11 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat(variables('VMSSPrefix'),'/newuserscript')]",
+        "name": "[concat(variables('VMSSName'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[ResourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('VMSSPrefix'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('VMSSName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
