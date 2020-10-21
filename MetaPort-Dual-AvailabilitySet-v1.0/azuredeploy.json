@@ -75,6 +75,7 @@
         }
     },
     "variables": {
+        "vmName": "vmName",
         "virtualNetworkName": "myVNET",
         "addressPrefix": "10.0.0.0/16",
         "subnet1Name": "Subnet-1",
@@ -273,16 +274,16 @@
             }
         },
     {
-      "name": "CustomScriptExtension",
       "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(variables('vmName'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[ResourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/myvm', copyindex())]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScriptExtension",
+        "type": "CustomScript",
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
