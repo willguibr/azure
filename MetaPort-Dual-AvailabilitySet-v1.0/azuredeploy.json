@@ -309,7 +309,9 @@
             "name": "virtualMachineLoop",
             "count": "[parameters('numberOfInstances')]"
             },
-        "dependsOn": [],
+        "dependsOn":[
+            "virtualMachineLoop"
+        ],
         "properties": {
             "publisher": "Microsoft.Azure.Extensions",
             "type": "CustomScript",
