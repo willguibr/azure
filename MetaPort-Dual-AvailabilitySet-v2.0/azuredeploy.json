@@ -363,9 +363,13 @@
         },
         {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat('myvm', copyIndex(), '/newuserscript')]",
+        "name": "[concat('metaport', copyIndex(), '/newuserscript')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
+        "copy": {
+            "name": "metaport",
+            "count": "[parameters('numberOfInstances')]"
+            },
         "dependsOn":[
             "virtualMachineLoop"
         ],
