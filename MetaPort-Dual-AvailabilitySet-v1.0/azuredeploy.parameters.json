@@ -2,17 +2,23 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "vmName": {
-      "value": "mp"
+    "MetaPort1": {
+      "value": "GEN-UNIQUE-10"
+    },
+    "MetaPort2": {
+      "value": "GEN-UNIQUE-10"
     },
     "numberOfInstances": {
       "value": 2
     },
-    "vmSize": {
+    "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
     "virtualNetworkName": {
       "value": "GET-PREREQ-virtualNetworkName"
+    },
+    "subnet1Name": {
+      "value": "GET-PREREQ-subnet1Name"
     },
     "adminUsername": {
       "value": "GEN-UNIQUE"
