@@ -2,8 +2,11 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "vmName": {
-      "value": "GEN-UNIQUE-10"
+  "virtualMachineSize": {
+    "value": "Standard_D2s_v3"
+  },
+    "numberOfInstances": {
+      "value": 2
     },
     "adminUsername": {
       "value": "GEN-UNIQUE"
@@ -11,16 +14,10 @@
     "adminPasswordOrKey": {
       "value": "GEN-SSH-PUB-KEY"
     },
-    "vmSize": {
-      "value": "Standard_D2s_v3"
+    "MP1TokenCode": {
+      "value": "GEN-PASSWORD"
     },
-    "virtualNetworkName": {
-      "value": "GET-PREREQ-virtualNetworkName"
-    },
-    "subnet1Name": {
-      "value": "GET-PREREQ-subnet1Name"
-    },
-    "metaTokenCode": {
+    "MP2TokenCode": {
       "value": "GEN-PASSWORD"
     }
   }
