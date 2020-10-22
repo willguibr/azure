@@ -292,11 +292,11 @@
                 ]
             }
         },
-        {
-            "type": "Microsoft.Compute/virtualMachines",
-            "name": "[variables('MetaPort1')]",
-            "apiVersion": "2020-06-01",
-            "location": "[parameters('location')]",
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('MetaPort1')]",
+      "apiVersion": "2019-12-01",
+      "location": "[parameters('location')]",
             "copy": {
                 "name": "virtualMachineLoop",
                 "count": "[parameters('numberOfInstances')]"
@@ -308,14 +308,15 @@
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
                 },
-                "hardwareProfile": {
-                    "vmSize": "[parameters('virtualMachineSize')]"
-                },
+         "properties": {
+            "hardwareProfile": {
+                "vmSize": "[parameters('virtualMachineSize')]"
+            },
                 "osProfile": {
-                    "computerName": "[concat('vm', copyIndex())]",
-                    "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPasswordOrKey')]",
-                    "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+                "computerName": "[variables('MetaPort1')]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "adminPassword": "[parameters('adminPasswordOrKey')]",
+                "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
                 },
                 "storageProfile": {
                     "imageReference": "[variables('imageReference')]",
@@ -323,15 +324,21 @@
                         "createOption": "FromImage"
                     }
                 },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex()))]"
-                        }
-                    ]
-                }
+                "osDisk": {
+                "name": "[concat(variables('MetaPort1'), '_OSDisk')]",
+                "caching": "ReadWrite",
+                "createOption": "FromImage"
             }
         },
+            "networkProfile": {
+                "networkInterfaces": [
+                {
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex()))]"
+                }
+            ]
+        }
+      }
+    },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('MetaPort1'),'/newuserscript')]",
