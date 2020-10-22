@@ -5,6 +5,7 @@ sudo chmod +x build/build_mp.sh
 sudo ./build/build_mp.sh
 sleep 20
 MP1TokenCode=$1
-MP2TokenCode=$1
+MP2TokenCode=$2
 su mpadmin -c "metaport onboard $MP1TokenCode"
+sleep 10
 su mpadmin -c "metaport onboard $MP2TokenCode"
