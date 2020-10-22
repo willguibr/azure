@@ -323,7 +323,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat('metaport-', copyIndex())]",
+            "name": "[concat('metaport-', copyIndex(1))]",
             "apiVersion": "2020-06-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -341,7 +341,7 @@
                     "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "[concat('vm', copyIndex())]",
+                    "computerName": "[concat('vm', copyIndex(1))]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPasswordOrKey')]",
                     "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
@@ -355,7 +355,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex()))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex(1)))]"
                         }
                     ]
                 }
@@ -363,11 +363,11 @@
         },
         {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat('metaport-', '/metaport1')]",
+        "name": "[concat('metaport-',copyIndex(1), '/metaport1')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
         "copy": {
-            "name": "metaport",
+            "name": "metaport-1",
             "count": "[parameters('numberOfInstances')]"
             },
         "dependsOn":[
@@ -388,11 +388,11 @@
     },
             {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat('metaport-', '/metaport2')]",
+        "name": "[concat('metaport-', copyIndex(2), '/metaport2')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
         "copy": {
-            "name": "metaport",
+            "name": "metaport-2",
             "count": "[parameters('numberOfInstances')]"
             },
         "dependsOn":[
