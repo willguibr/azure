@@ -374,11 +374,11 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('MetaPort1'),'/newuserscript')]",
+            "name": "[concat(variables('MetaPort1'),'/newuserscript')]",
             "apiVersion": "2020-06-01",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/', parameters('MetaPort1'))]",
+                "[resourceId('Microsoft.Compute/virtualMachines/', variables('MetaPort1'))]",
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
                 "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
             ],
@@ -397,11 +397,11 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('MetaPort2'),'/newuserscript')]",
+            "name": "[concat(variables('MetaPort2'),'/newuserscript')]",
             "apiVersion": "2020-06-01",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/', parameters('MetaPort2'))]",
+                "[resourceId('Microsoft.Compute/virtualMachines/', variables('MetaPort2'))]",
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
                 "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
             ],
