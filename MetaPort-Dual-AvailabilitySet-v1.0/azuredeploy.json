@@ -305,12 +305,8 @@
         "name": "[concat('myvm', copyIndex(), '/newuserscript')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
-        "copy": {
-            "name": "virtualMachineLoop",
-            "count": "[parameters('numberOfInstances')]"
-            },
         "dependsOn":[
-            "myvm"
+            "virtualMachineLoop"
         ],
         "properties": {
             "publisher": "Microsoft.Azure.Extensions",
