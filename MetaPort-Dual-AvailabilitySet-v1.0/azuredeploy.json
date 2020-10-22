@@ -2,6 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the unique DNS name of the for the public IP for your VM"
+      }
+    },
         "numberOfInstances": {
             "type": "int",
             "defaultValue": 2,
@@ -75,6 +81,7 @@
         }
     },
     "variables": {
+        "vmName": "[parameters('vmName')]",
         "virtualNetworkName": "myVNET",
         "addressPrefix": "10.0.0.0/16",
         "subnet1Name": "Subnet-1",
@@ -234,7 +241,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat('myvm', copyIndex())]",
+            "name": "[concat('vmName', copyIndex())]",
             "apiVersion": "2020-06-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -274,9 +281,12 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name":  "[concat('myvm', copyIndex(), '/newuserscript')]",
+      "name": "[concat(variables('vmName'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[ResourceGroup().location]",
+     "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+      ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
