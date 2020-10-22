@@ -379,10 +379,10 @@
             "typeHandlerVersion": "2.0",
             "autoUpgradeMinorVersion": true,
             "settings": {
-            "fileUris": ["https://github.com/willguibr/azure/tree/main/MetaPort-Dual-AvailabilitySet-v3.0/scripts/"]
+            "fileUris": ["https://github.com/willguibr/azure/tree/main/MetaPort-Dual-AvailabilitySet-v3.0/scripts/install_metaport.sh"]
             },
             "protectedSettings": {
-                "commandToExecute": "[concat('sh install_metaport1.sh', parameters('MP1TokenCode'), ' ', concat('sh install_metaport2.sh', parameters('MP2TokenCode')))]"
+                "commandToExecute": "[concat('sh install_metaport.sh', parameters('MP1TokenCode'), ' ', concat('sh install_metaport.sh', parameters('MP2TokenCode')))]"
         }
       }
     }
