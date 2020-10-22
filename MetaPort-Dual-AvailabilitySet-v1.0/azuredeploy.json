@@ -310,7 +310,7 @@
             "count": "[parameters('numberOfInstances')]"
             },
         "dependsOn":[
-            "virtualMachineLoop"
+            "myvm"
         ],
         "properties": {
             "publisher": "Microsoft.Azure.Extensions",
