@@ -76,7 +76,7 @@
         "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),variables('subnet1Name'))]",
         "availabilitySetName": "myAvSet",
         "VMSSName": {
-            "value": "[concat(variables('VMSSPrefix'), padLeft(copyindex(), 2, '0'))]"
+            "value": "[concat(variables('VMSSPrefix'))]"
           },
         "imageReference": {
             "Ubuntu": {
