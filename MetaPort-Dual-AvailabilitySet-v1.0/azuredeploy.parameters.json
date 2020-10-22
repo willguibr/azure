@@ -2,29 +2,14 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "MetaPort1": {
-      "value": "GEN-UNIQUE-10"
-    },
-    "MetaPort2": {
-      "value": "GEN-UNIQUE-10"
+    "adminUsername": {
+      "value": "GEN-UNIQUE"
     },
     "numberOfInstances": {
       "value": 2
     },
-    "virtualMachineSize": {
-      "value": "Standard_D2s_v3"
-    },
-    "adminUsername": {
-      "value": "GEN-UNIQUE"
-    },
     "adminPasswordOrKey": {
       "value": "GEN-SSH-PUB-KEY"
-    },
-    "MP1TokenCode": {
-      "value": "GEN-PASSWORD"
-    },
-    "MP2TokenCode": {
-      "value": "GEN-PASSWORD"
     }
   }
 }
