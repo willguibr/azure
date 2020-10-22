@@ -367,7 +367,7 @@
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
         "copy": {
-            "name": "metaport1",
+            "name": "metaport",
             "count": "[parameters('numberOfInstances')]"
             },
         "dependsOn":[
@@ -382,17 +382,17 @@
             "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v3.0/scripts/install_metaport1.sh"]
             },
             "protectedSettings": {
-            "commandToExecute": "[concat('sh install_metaport1.sh ', parameters('MP1TokenCode'), ' ')]"
+                "commandToExecute": "[concat('sh install_metaport1.sh ', parameters('MP1TokenCode'), ' ')]"
         }
       }
     },
             {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat('metaport', copyIndex(1), '/metaport2')]",
+        "name": "[concat('metaport', copyIndex(), '/metaport2')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
         "copy": {
-            "name": "metaport2",
+            "name": "metaport",
             "count": "[parameters('numberOfInstances')]"
             },
         "dependsOn":[
@@ -407,7 +407,7 @@
             "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v3.0/scripts/install_metaport2.sh"]
             },
             "protectedSettings": {
-            "commandToExecute": "[concat('sh install_metaport2.sh ', parameters('MP2TokenCode'), ' ')]"
+                "commandToExecute": "[concat('sh install_metaport2.sh ', parameters('MP2TokenCode'), ' ')]"
         }
       }
     }
