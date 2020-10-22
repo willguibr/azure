@@ -16,11 +16,18 @@
             "defaultValue": "Standard_D2s_v3",
             "allowedValues": [
                "Standard_D2s_v3",
-                "Standard_DS4_v2",
-                "Standard_DS5_v2"
+               "Standard_DS4_v2",
+               "Standard_DS5_v2"
             ],
             "metadata": {
                 "description": "description"
+            }
+        },
+        "OS": {
+            "type": "string",
+            "defaultValue": "Ubuntu",
+            "metadata": {
+                "description": "OS Platform for the VM"
             }
         },
         "adminUsername": {
@@ -68,16 +75,12 @@
         }
     },
     "variables": {
-        "VMSSPrefix": "metaport",
         "virtualNetworkName": "myVNET",
         "addressPrefix": "10.0.0.0/16",
         "subnet1Name": "Subnet-1",
         "subnet1Prefix": "10.0.0.0/24",
         "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),variables('subnet1Name'))]",
         "availabilitySetName": "myAvSet",
-        "VMSSName": {
-            "value": "[concat(variables('VMSSPrefix'))]"
-          },
         "imageReference": {
             "Ubuntu": {
                 "publisher": "Canonical",
@@ -271,12 +274,9 @@
         },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat(variables('VMSSName'),'/newuserscript')]",
+      "name":  "[concat('myvm', copyIndex(), '/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[ResourceGroup().location]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('VMSSName'))]"
-      ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
