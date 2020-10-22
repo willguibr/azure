@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vmName": {
-      "value": "GEN-UNIQUE-10"
+      "value": "mp"
     },
     "numberOfInstances": {
       "value": 2
