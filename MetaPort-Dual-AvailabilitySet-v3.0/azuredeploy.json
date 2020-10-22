@@ -366,6 +366,10 @@
         "name": "[concat('metaport-',copyIndex(1), '/metaport1')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
+        "copy": {
+            "name": "metaport-",
+            "count": "[parameters('numberOfInstances')]"
+            },
         "dependsOn":[
             "virtualMachineLoop"
         ],
@@ -375,31 +379,10 @@
             "typeHandlerVersion": "2.0",
             "autoUpgradeMinorVersion": true,
             "settings": {
-            "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v3.0/scripts/install_metaport1.sh"]
+            "fileUris": ["https://github.com/willguibr/azure/tree/main/MetaPort-Dual-AvailabilitySet-v3.0/scripts/"]
             },
             "protectedSettings": {
-                "commandToExecute": "[concat('sh install_metaport1.sh ', parameters('MP1TokenCode'), ' ')]"
-        }
-      }
-    },
-            {
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat('metaport-', copyIndex(2), '/metaport2')]",
-        "apiVersion": "2020-06-01",
-        "location": "[parameters('location')]",
-        "dependsOn":[
-            "virtualMachineLoop"
-        ],
-        "properties": {
-            "publisher": "Microsoft.Azure.Extensions",
-            "type": "CustomScript",
-            "typeHandlerVersion": "2.0",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-            "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v3.0/scripts/install_metaport2.sh"]
-            },
-            "protectedSettings": {
-                "commandToExecute": "[concat('sh install_metaport2.sh ', parameters('MP2TokenCode'), ' ')]"
+                "commandToExecute": "[concat('sh install_metaport1.sh', parameters('MP1TokenCode'), ' ', concat('sh install_metaport2.sh', parameters('MP2TokenCode')))]"
         }
       }
     }
