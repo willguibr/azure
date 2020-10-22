@@ -308,7 +308,7 @@
             "typeHandlerVersion": "2.0",
             "autoUpgradeMinorVersion": true,
             "settings": {
-            "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v1.0/install_metaport.sh"]
+            "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v1.0/install_metaport.sh"]
             },
             "protectedSettings": {
             "commandToExecute": "[concat('sh install_metaport.sh ', parameters('MP1TokenCode'), parameters('MP2TokenCode'))]"
