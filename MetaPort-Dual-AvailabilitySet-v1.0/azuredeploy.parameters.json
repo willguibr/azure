@@ -14,12 +14,6 @@
     "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
-    "virtualNetworkName": {
-      "value": "GET-PREREQ-virtualNetworkName"
-    },
-    "subnet1Name": {
-      "value": "GET-PREREQ-subnet1Name"
-    },
     "adminUsername": {
       "value": "GEN-UNIQUE"
     },

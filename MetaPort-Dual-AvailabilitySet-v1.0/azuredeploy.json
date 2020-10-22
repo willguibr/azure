@@ -233,39 +233,39 @@
                 ]
             }
         },
-    {
-      "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2019-11-01",
-      "name": "[variables('publicIpName')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard"
-      },
-      "properties": {
-        "publicIPAddressVersion": "IPv4",
-        "publicIPAllocationMethod": "Static",
-        "idleTimeoutInMinutes": 4,
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('publicipdns')]"
+        {
+        "type": "Microsoft.Network/publicIPAddresses",
+        "apiVersion": "2019-11-01",
+        "name": "[variables('publicIpName')]",
+        "location": "[parameters('location')]",
+        "sku": {
+            "name": "Standard"
+        },
+        "properties": {
+            "publicIPAddressVersion": "IPv4",
+            "publicIPAllocationMethod": "Static",
+            "idleTimeoutInMinutes": 4,
+            "dnsSettings": {
+            "domainNameLabel": "[parameters('publicipdns')]"
+            }
         }
-      }
-    },
-    {
-      "type": "Microsoft.Network/natGateways",
-      "apiVersion": "2019-11-01",
-      "name": "[parameters('natGatewayName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
-      ],
-      "sku": {
-        "name": "Standard"
-      },
-      "properties": {
-        "idleTimeoutInMinutes": 4,
-        "publicIpAddresses": "[if(not(empty(parameters('publicipdns'))), variables('publicIpAddresses'), json('null'))]"
-      }
-    },
+        },
+        {
+        "type": "Microsoft.Network/natGateways",
+        "apiVersion": "2019-11-01",
+        "name": "[parameters('natGatewayName')]",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
+        ],
+        "sku": {
+            "name": "Standard"
+        },
+        "properties": {
+            "idleTimeoutInMinutes": 4,
+            "publicIpAddresses": "[if(not(empty(parameters('publicipdns'))), variables('publicIpAddresses'), json('null'))]"
+            }
+        },
         {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat('nic', copyindex())]",
@@ -333,12 +333,54 @@
             }
         },
         {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('MetaPort1'),'/newuserscript')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[variables('MetaPort2')]",
             "apiVersion": "2020-06-01",
-            "location": "[ResourceGroup().location]",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "virtualMachineLoop",
+                "count": "[parameters('numberOfInstances')]"
+            },
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/', variables('MetaPort1'))]"
+                "nicLoop"
+            ],
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[concat('vm', copyIndex())]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPasswordOrKey')]",
+                    "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')]",
+                    "osDisk": {
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex()))]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('MetaPort1'),'/newuserscript')]",
+            "apiVersion": "2020-06-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/', parameters('MetaPort1'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+                "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
             ],
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
@@ -346,18 +388,22 @@
                 "typeHandlerVersion": "2.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v1.0/install_metaport.sh"],
+                "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v1.0/install_metaport.sh"]
+                },
+                "protectedSettings": {
                 "commandToExecute": "[concat('sh install_metaport.sh ', parameters('MP1TokenCode'))]"
                 }
             }
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('MetaPort2'),'/newuserscript')]",
+            "name": "[concat(parameters('MetaPort2'),'/newuserscript')]",
             "apiVersion": "2020-06-01",
-            "location": "[ResourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/', variables('MetaPort2'))]"
+                "[resourceId('Microsoft.Compute/virtualMachines/', parameters('MetaPort2'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+                "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
             ],
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
@@ -365,10 +411,12 @@
                 "typeHandlerVersion": "2.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v1.0/install_metaport.sh"],
+                "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v1.0/install_metaport.sh"]
+                },
+                "protectedSettings": {
                 "commandToExecute": "[concat('sh install_metaport.sh ', parameters('MP2TokenCode'))]"
                 }
+            }
         }
-    }
-  ]
+    ]
 }
