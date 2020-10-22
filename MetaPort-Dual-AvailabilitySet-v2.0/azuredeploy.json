@@ -264,7 +264,7 @@
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[concat('nic', copyindex())]",
+            "name": "[concat('nic', copyindex(1))]",
             "apiVersion": "2020-05-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -341,7 +341,7 @@
                     "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "[concat('vm', copyIndex())]",
+                    "computerName": "[concat('vm', copyIndex(1))]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPasswordOrKey')]",
                     "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
@@ -355,7 +355,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex()))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex(1)))]"
                         }
                     ]
                 }
