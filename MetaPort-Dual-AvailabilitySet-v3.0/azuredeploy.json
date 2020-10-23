@@ -382,7 +382,7 @@
             "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v3.0/install_metaport.sh"]
             },
             "protectedSettings": {
-                "commandToExecute": "[concat('./install_metaport.sh', parameters('MP1TokenCode')[copyIndex(1)], ' ', concat(parameters('MP2TokenCode')[copyIndex(2)]))]"
+                "commandToExecute": "[concat('./install_metaport.sh', parameters('MP1TokenCode')[copyIndex()], ' ', concat(parameters('MP2TokenCode')[copyIndex()]))]"
             }
         }
     }
