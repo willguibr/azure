@@ -363,12 +363,12 @@
         },
         {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat('metaport-', copyIndex(1), '/newuserscript')]",
+        "name": "[concat('metaport-1', copyIndex(1), '/newuserscript')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
         "copy": {
             "name": "metaport-",
-            "count": "[parameters('numberOfInstances')]"
+              "count": "[parameters('numberOfInstances')]"
             },
         "dependsOn":[
             "virtualMachineLoop"
@@ -382,9 +382,9 @@
             "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Dual-AvailabilitySet-v3.0/install_metaport.sh"]
             },
             "protectedSettings": {
-                "commandToExecute": "[concat('./install_metaport.sh', parameters('MP1TokenCode'), ' ', concat(parameters('MP2TokenCode')))]"
+                "commandToExecute": "[concat('./install_metaport.sh', parameters('MP1TokenCode')[copyIndex(1)], ' ', concat(parameters('MP2TokenCode')[copyIndex(2)]))]"
+            }
         }
-      }
     }
   ],
   "outputs": {}
