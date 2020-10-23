@@ -363,7 +363,7 @@
         },
         {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat('metaport-',copyIndex(1), '/newuserscript')]",
+        "name": "[concat('metaport-', copyIndex(1), '/newuserscript')]",
         "apiVersion": "2020-06-01",
         "location": "[parameters('location')]",
         "copy": {
@@ -386,5 +386,6 @@
         }
       }
     }
-  ]
+  ],
+  "outputs": {}
 }
