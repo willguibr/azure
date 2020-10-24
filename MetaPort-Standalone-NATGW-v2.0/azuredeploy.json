@@ -245,7 +245,7 @@
             "properties": {
               "addressPrefix": "[parameters('subnetAddressRange')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
               },
               "natGateway": {
                 "id": "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
