@@ -8,8 +8,7 @@ Plese note: This deployment template creates and attach an existing Network Secu
 
 ## Note
 1. This template deploys and onboard a single MetaPort Connector into a Public subnet.
-2. This template should be used for testing purposes only. We do not recommend to have the MetaPort Connector as a public facing device.
-3. When running MetaPort diagnostic commands such as "metaport check", the first 3 tests will fail as those use ICMP to external addresses. Ping external address from Azure VMs are not allowed as Azure does not permit outbound ICMP.
+2. When running MetaPort diagnostic commands such as "metaport check", the first 3 tests will fail as those use ICMP to external addresses. Ping external address from Azure VMs are not allowed as Azure does not permit outbound ICMP.
 
       <a href="https://github.com/willguibr/azure/blob/main/MetaPort-Standalone-v2.0/images/metaport-check.png">
          <img alt="Qries" src="https://github.com/willguibr/azure/blob/main/MetaPort-Standalone-v2.0/images/metaport-check.png">
