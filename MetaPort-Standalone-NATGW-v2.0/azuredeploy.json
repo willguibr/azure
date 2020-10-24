@@ -286,7 +286,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'metaSubnet')]",
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"  
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -401,7 +401,7 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"]
+          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-v1.0/install_metaport.sh"]
         },
         "protectedSettings": {
           "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
