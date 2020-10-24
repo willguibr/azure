@@ -49,7 +49,7 @@
     },
     "subnetName": {
       "type": "String",
-      "defaultValue": "MetaPortSubnet",
+      "defaultValue": "metaSubnet",
       "metadata": {
         "description": "Name of the subnet for virtual network"
       }
@@ -62,7 +62,7 @@
       }
     },
     "subnetAddressRange": {
-      "defaultValue": "192.168.0.0/24",
+      "defaultValue": "192.168.1.0/24",
       "type": "String",
       "metadata": {
         "description": "Subnet prefix for virtual network"
@@ -245,7 +245,7 @@
             "properties": {
               "addressPrefix": "[parameters('subnetAddressRange')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
               },
               "natGateway": {
                 "id": "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
@@ -283,7 +283,9 @@
       "name": "[variables('nicName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+        "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'metaSubnet')]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"  
       ],
       "properties": {
         "ipConfigurations": [
@@ -296,9 +298,14 @@
               }
             }
           }
-        ]
-      }
-    },
+        ],
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                }
+        }
+      },
     {
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2019-11-01",
