@@ -22,14 +22,14 @@
       }
     },
     "virtualNetworkName": {
-      "defaultValue": "myVnet",
+      "defaultValue": "Vnet",
       "type": "String",
       "metadata": {
         "description": "Name of the virtual network"
       }
     },
     "subnetName": {
-      "defaultValue": "mySubnet",
+      "defaultValue": "Subnet",
       "type": "String",
       "metadata": {
         "description": "Name of the subnet for virtual network"
@@ -50,7 +50,7 @@
       }
     },
     "natGatewayName": {
-      "defaultValue": "myNATgateway",
+      "defaultValue": "NATgateway",
       "type": "String",
       "metadata": {
         "description": "Name of the NAT gateway resource"
