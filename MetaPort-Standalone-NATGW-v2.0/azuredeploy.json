@@ -226,7 +226,7 @@
     {
       "condition": "[equals(parameters('vNetNewOrExisting'), 'new')]",
       "type": "Microsoft.Network/virtualNetworks",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2019-11-01",
       "name": "[parameters('virtualNetworkName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
@@ -243,15 +243,19 @@
             "name": "[parameters('subnetName')]",
             "properties": {
               "addressPrefix": "[parameters('subnetAddressRange')]",
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
-              }
+              "natGateway": {
+                "id": "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
+              },
+              "privateEndpointNetworkPolicies": "Enabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
             }
           }
-        ]
+        ],
+        "enableDdosProtection": false,
+        "enableVmProtection": false
       }
     },
-      {
+    {
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "apiVersion": "2019-11-01",
       "name": "[concat(parameters('virtualNetworkName'), '/mySubnet')]",
