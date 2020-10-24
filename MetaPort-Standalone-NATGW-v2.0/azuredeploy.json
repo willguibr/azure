@@ -34,7 +34,7 @@
       }
     },
     "virtualNetworkName": {
-      "defaultValue": "MetaPort-VNET",
+      "defaultValue": "MetaPortVNET",
       "type": "String",
       "metadata": {
         "description": "Name of the virtual network"
@@ -49,7 +49,7 @@
     },
     "subnetName": {
       "type": "String",
-      "defaultValue": "MetaPort-Subnet",
+      "defaultValue": "MetaPortSubnet",
       "metadata": {
         "description": "Name of the subnet for virtual network"
       }
