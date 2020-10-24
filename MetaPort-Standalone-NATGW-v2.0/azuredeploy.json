@@ -40,6 +40,13 @@
         "description": "Name of the virtual network"
       }
     },
+    "virtualNetworkResourceGroup": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "Name of the existing VNET resource group. If vNetNewOrExisting is set to existing, than specify the Resource Group where existing Virtual Network is located. If vNetNewOrExisting i set to new, leave this field as [resourceGroup().name]"
+      }
+    },
     "networkSecurityGroupName": {
       "type": "string",
       "defaultValue": "Meta-NSG",
@@ -126,6 +133,7 @@
         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
       }
     ],
+    "subnetRef": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'),  parameters('subnetName'))]",
     "nicName": "VMNic",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
@@ -262,7 +270,7 @@
     {
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "apiVersion": "2019-11-01",
-      "name": "[concat(parameters('virtualNetworkName'), '/mySubnet')]",
+      "name": "[concat(parameters('virtualNetworkName'), '/subnetName')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
@@ -291,7 +299,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                "id": "[variables('subnetRef')]"
               }
             }
           }
