@@ -3,7 +3,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "MetaPortName": {
+    "vmName": {
       "type": "string",
       "metadata": {
         "description": "This is the unique DNS name of the for the public IP for your VM"
@@ -113,7 +113,7 @@
     "imageSKU": "18.04-LTS",
     "imageOffer": "UbuntuServer",
     "storageAccountType": "Standard_LRS",
-    "MetaPortName": "[parameters('MetaPortName')]",
+    "vmName": "[parameters('vmName')]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -144,19 +144,6 @@
               "direction": "Inbound",
               "destinationPortRange": "22",
               "protocol": "Tcp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
-          },
-          {
-            "name": "Inbound-ICMP-Traffic",
-            "properties": {
-              "priority": 1001,
-              "access": "Allow",
-              "direction": "Inbound",
-              "destinationPortRange": "*",
-              "protocol": "Icmp",
               "sourceAddressPrefix": "*",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
@@ -200,19 +187,6 @@
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }
-          },
-          {
-            "name": "Outbound-ICMP-Traffic",
-            "properties": {
-              "priority": 2003,
-              "access": "Allow",
-              "direction": "Outbound",
-              "destinationPortRange": "*",
-              "protocol": "Icmp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
           }
         ]
       }
@@ -241,7 +215,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('MetaPortName')]",
+      "name": "[variables('vmName')]",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
       "dependsOn": [
@@ -252,7 +226,7 @@
           "vmSize": "[parameters('virtualMachineSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('MetaPortName')]",
+          "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPasswordOrKey')]",
           "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
@@ -265,7 +239,7 @@
             "version": "[variables('imageVersion')]"
           },
           "osDisk": {
-            "name": "[concat(variables('MetaPortName'), '_OSDisk')]",
+            "name": "[concat(variables('vmName'), '_OSDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "managedDisk": {
@@ -365,11 +339,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('MetaPortName'),'/newuserscript')]",
+      "name": "[concat(variables('vmName'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', parameters('MetaPortName'))]",
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
       ],
@@ -386,5 +360,6 @@
         }
       }
     }
-  ]
-}
+  ],
+  "outputs": {}
+ }
