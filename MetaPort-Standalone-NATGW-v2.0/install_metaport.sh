@@ -7,17 +7,10 @@ sudo chmod +x build/build_mp.sh
 
 # Initiating MetaPort package installation
 sudo ./build/build_mp.sh
-sleep 1m
+sleep 15
 
 # Token Code provided by the Customer during the Wizard configuration
 metaTokenCode=$1
 
 # Initiating Onboarding Process
 su mpadmin -c "metaport onboard $metaTokenCode"
-Sleep 15
-
-# Running MetaPort Check
-metaportCheck=$2
-su mpadmin -c "metaport check"
-echo $2
-exit
