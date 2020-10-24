@@ -144,14 +144,15 @@
           }
         ]
       }
-    }
+    },
+    "networkSecurityGroupName": "default-NSG"
   },
   "resources": [
     {
       "comments": "Default Network Security Group for template",
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2020-05-01",
-      "name": "[parameters('networkSecurityGroupName')]",
+      "name": "[variables('networkSecurityGroupName')]",
       "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
@@ -230,7 +231,7 @@
       "name": "[parameters('virtualNetworkName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
         "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
       ],
       "properties": {
@@ -245,7 +246,7 @@
             "properties": {
               "addressPrefix": "[parameters('subnetAddressRange')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
               },
               "natGateway": {
                 "id": "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
@@ -285,7 +286,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'metaSubnet')]",
-        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"  
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"  
       ],
       "properties": {
         "ipConfigurations": [
