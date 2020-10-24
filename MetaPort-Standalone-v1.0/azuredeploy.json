@@ -120,19 +120,6 @@
             }
           },
           {
-            "name": "default-allow-80",
-            "properties": {
-              "priority": 1001,
-              "access": "Allow",
-              "direction": "Inbound",
-              "destinationPortRange": "80",
-              "protocol": "Tcp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
-          },
-          {
             "name": "Outbound-HTTPS-Traffic",
             "properties": {
               "priority": 2000,
@@ -166,19 +153,6 @@
               "direction": "Outbound",
               "destinationPortRange": "4500",
               "protocol": "Udp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
-          },
-          {
-            "name": "Outbound-ICMP-Traffic",
-            "properties": {
-              "priority": 2003,
-              "access": "Allow",
-              "direction": "Outbound",
-              "destinationPortRange": "*",
-              "protocol": "Icmp",
               "sourceAddressPrefix": "*",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
