@@ -5,6 +5,7 @@
   "parameters": {
     "vmName": {
       "type": "string",
+      "defaultValue": "MetaPort-VM1",
       "metadata": {
         "description": "This is the unique DNS name of the for the public IP for your VM"
       }
@@ -33,7 +34,7 @@
       }
     },
     "virtualNetworkName": {
-      "defaultValue": "MetaPort VNET",
+      "defaultValue": "MetaPort-VNET",
       "type": "String",
       "metadata": {
         "description": "Name of the virtual network"
@@ -47,7 +48,7 @@
       }
     },
     "subnetName": {
-      "defaultValue": "MetaPort Subnet",
+      "defaultValue": "MetaPort-Subnet",
       "type": "String",
       "metadata": {
         "description": "Name of the subnet for virtual network"
