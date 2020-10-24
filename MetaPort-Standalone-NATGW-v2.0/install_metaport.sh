@@ -7,7 +7,7 @@ sudo chmod +x build/build_mp.sh
 
 # Initiating MetaPort package installation
 sudo ./build/build_mp.sh
-sleep 15
+sleep 30
 
 # Token Code provided by the Customer during the Wizard configuration
 metaTokenCode=$1

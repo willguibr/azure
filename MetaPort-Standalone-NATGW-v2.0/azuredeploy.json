@@ -390,6 +390,8 @@
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/', parameters('vmName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'metaSubnet')]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
         "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
       ],
       "properties": {
