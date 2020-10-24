@@ -75,7 +75,7 @@
         "description": "Name of the NAT gateway resource"
       }
     },
-    "PublicIpdns": {
+    "PublicIpDns": {
       "defaultValue": "[concat('gw-', uniqueString(resourceGroup().id))]",
       "type": "String",
       "metadata": {
@@ -143,15 +143,14 @@
           }
         ]
       }
-    },
-    "networkSecurityGroupName": "default-NSG"
+    }
   },
   "resources": [
     {
       "comments": "Default Network Security Group for template",
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2020-05-01",
-      "name": "[variables('networkSecurityGroupName')]",
+      "name": "[parameters('networkSecurityGroupName')]",
       "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
@@ -243,6 +242,9 @@
             "name": "[parameters('subnetName')]",
             "properties": {
               "addressPrefix": "[parameters('subnetAddressRange')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+              },
               "natGateway": {
                 "id": "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
               },
@@ -251,6 +253,7 @@
             }
           }
         ],
+
         "enableDdosProtection": false,
         "enableVmProtection": false
       }
