@@ -33,7 +33,7 @@
       }
     },
     "virtualNetworkName": {
-      "defaultValue": "Meta-VNET",
+      "defaultValue": "MetaPort VNET",
       "type": "String",
       "metadata": {
         "description": "Name of the virtual network"
@@ -41,13 +41,13 @@
     },
     "networkSecurityGroupName": {
       "type": "string",
-      "defaultValue": "Zscaler-NSS-NSG",
+      "defaultValue": "MetaPort Security Group",
       "metadata": {
         "description": "Name of the new Network Security Group (NSG)"
       }
     },
     "subnetName": {
-      "defaultValue": "mySubnet",
+      "defaultValue": "MetaPort Subnet",
       "type": "String",
       "metadata": {
         "description": "Name of the subnet for virtual network"
@@ -68,7 +68,7 @@
       }
     },
     "natGatewayName": {
-      "defaultValue": "myNATgateway",
+      "defaultValue": "Meta NAT Gateway",
       "type": "String",
       "metadata": {
         "description": "Name of the NAT gateway resource"
@@ -381,7 +381,7 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v1.0/install_metaport.sh"]
+          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"]
         },
         "protectedSettings": {
           "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
