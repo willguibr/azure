@@ -42,7 +42,7 @@
     },
     "networkSecurityGroupName": {
       "type": "string",
-      "defaultValue": "MetaPort-Security-Group",
+      "defaultValue": "Meta-NSG",
       "metadata": {
         "description": "Name of the new Network Security Group (NSG)"
       }
@@ -69,7 +69,7 @@
       }
     },
     "natGatewayName": {
-      "defaultValue": "Meta-NAT-Gateway",
+      "defaultValue": "NAT-Gateway",
       "type": "String",
       "metadata": {
         "description": "Name of the NAT gateway resource"
