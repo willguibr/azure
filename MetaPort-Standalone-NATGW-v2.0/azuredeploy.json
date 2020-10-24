@@ -40,13 +40,6 @@
         "description": "Name of the virtual network"
       }
     },
-    "virtualNetworkResourceGroup": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().name]",
-      "metadata": {
-        "description": "Name of the existing VNET resource group. If vNetNewOrExisting is set to existing, than specify the Resource Group where existing Virtual Network is located. If vNetNewOrExisting i set to new, leave this field as [resourceGroup().name]"
-      }
-    },
     "networkSecurityGroupName": {
       "type": "string",
       "defaultValue": "Meta-NSG",
@@ -55,8 +48,8 @@
       }
     },
     "subnetName": {
-      "defaultValue": "MetaPort-Subnet",
       "type": "String",
+      "defaultValue": "MetaPort-Subnet",
       "metadata": {
         "description": "Name of the subnet for virtual network"
       }
@@ -133,7 +126,7 @@
         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
       }
     ],
-    "subnetRef": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'),  parameters('subnetName'))]",
+    "subnetRef": "[resourceId( 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'),  parameters('subnetName'))]",
     "nicName": "VMNic",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
