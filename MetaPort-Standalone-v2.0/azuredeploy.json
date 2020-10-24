@@ -114,19 +114,6 @@
             }
           },
           {
-            "name": "Inbound-ICMP-Traffic",
-            "properties": {
-              "priority": 1001,
-              "access": "Allow",
-              "direction": "Inbound",
-              "destinationPortRange": "*",
-              "protocol": "Icmp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
-          },
-          {
             "name": "Outbound-HTTPS-Traffic",
             "properties": {
               "priority": 2000,
@@ -165,19 +152,6 @@
               "destinationAddressPrefix": "*"
             }
           },
-          {
-            "name": "Outbound-ICMP-Traffic",
-            "properties": {
-              "priority": 2003,
-              "access": "Allow",
-              "direction": "Outbound",
-              "destinationPortRange": "*",
-              "protocol": "Icmp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
-          }
         ]
       }
     },
