@@ -3,7 +3,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "MetaPortName": {
+    "vmName": {
       "type": "string",
       "metadata": {
         "description": "This is the unique DNS name of the for the public IP for your VM"
@@ -21,11 +21,29 @@
         "description": "Virtual Machine Size"
       }
     },
+    "vNetNewOrExisting": {
+      "type": "string",
+      "defaultValue": "new",
+      "allowedValues": [
+        "new",
+        "existing"
+      ],
+      "metadata": {
+        "description": "Specify whether to create a new or use existing virtual network for the VM."
+      }
+    },
     "virtualNetworkName": {
-      "defaultValue": "myVnet",
+      "defaultValue": "Meta-VNET",
       "type": "String",
       "metadata": {
         "description": "Name of the virtual network"
+      }
+    },
+    "networkSecurityGroupName": {
+      "type": "string",
+      "defaultValue": "Zscaler-NSS-NSG",
+      "metadata": {
+        "description": "Name of the new Network Security Group (NSG)"
       }
     },
     "subnetName": {
@@ -101,6 +119,7 @@
     }
   },
   "variables": {
+    "scriptUrl": "https://raw.githubusercontent.com/zscaler/nss-azure-deploy/master/scripts/copyvhd.ps1",
     "publicIpName": "[concat(parameters('natGatewayName'), 'ip')]",
     "publicIpAddresses": [
       {
@@ -113,7 +132,7 @@
     "imageSKU": "18.04-LTS",
     "imageOffer": "UbuntuServer",
     "storageAccountType": "Standard_LRS",
-    "MetaPortName": "[parameters('MetaPortName')]",
+    "vmName": "[parameters('vmName')]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -241,7 +260,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('MetaPortName')]",
+      "name": "[variables('vmName')]",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
       "dependsOn": [
@@ -252,7 +271,7 @@
           "vmSize": "[parameters('virtualMachineSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('MetaPortName')]",
+          "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPasswordOrKey')]",
           "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
@@ -265,7 +284,7 @@
             "version": "[variables('imageVersion')]"
           },
           "osDisk": {
-            "name": "[concat(variables('MetaPortName'), '_OSDisk')]",
+            "name": "[concat(variables('vmName'), '_OSDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "managedDisk": {
@@ -365,11 +384,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('MetaPortName'),'/newuserscript')]",
+      "name": "[concat(parameters('vmName'),'/newuserscript')]",
       "apiVersion": "2020-06-01",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', parameters('MetaPortName'))]",
+        "[resourceId('Microsoft.Compute/virtualMachines/', parameters('vmName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
       ],
