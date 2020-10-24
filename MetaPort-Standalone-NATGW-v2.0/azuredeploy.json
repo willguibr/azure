@@ -119,7 +119,6 @@
     }
   },
   "variables": {
-    "scriptUrl": "https://raw.githubusercontent.com/zscaler/nss-azure-deploy/master/scripts/copyvhd.ps1",
     "publicIpName": "[concat(parameters('natGatewayName'), 'ip')]",
     "publicIpAddresses": [
       {
