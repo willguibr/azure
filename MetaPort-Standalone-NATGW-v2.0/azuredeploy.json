@@ -54,7 +54,7 @@
         "description": "Name of the subnet for virtual network"
       }
     },
-    "vNetAddressRange": {
+    "vnetAddressRange": {
       "defaultValue": "192.168.0.0/16",
       "type": "String",
       "metadata": {
@@ -75,7 +75,7 @@
         "description": "Name of the NAT gateway resource"
       }
     },
-    "PublicIpDns": {
+    "publicIpDns": {
       "defaultValue": "[concat('gw-', uniqueString(resourceGroup().id))]",
       "type": "String",
       "metadata": {
@@ -229,12 +229,13 @@
       "name": "[parameters('virtualNetworkName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
+        "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
       ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[parameters('vNetAddressRange')]"
+            "[parameters('vnetAddressRange')]"
           ]
         },
         "subnets": [
