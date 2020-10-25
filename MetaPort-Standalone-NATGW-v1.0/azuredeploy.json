@@ -261,7 +261,8 @@
       "name": "[concat(parameters('virtualNetworkName'), '/mySubnet')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
+        "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
       ],
       "properties": {
         "addressPrefix": "[parameters('vnetSubnetPrefix')]",
