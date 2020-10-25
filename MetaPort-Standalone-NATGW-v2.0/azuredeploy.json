@@ -324,34 +324,34 @@
         },
         "resources": [
               {
-      "name": "metaport-onboard",
-      "type": "extensions",
-      "apiVersion": "2019-03-01",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]",
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.1",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"
+              "name": "metaport-onboard",
+              "type": "extensions",
+              "apiVersion": "2019-03-01",
+              "location": "[resourceGroup().location]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+                "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+              ],
+              "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                  "fileUris": [
+                    "https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"
+                    ]
+                  },
+                "protectedSettings": {
+                  "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
+                  }
+                }
+              }
             ]
-          },
-        "protectedSettings": {
-          "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
           }
-        }
+        ]
       }
-    ]
-  }
-  ]
-  }
           
