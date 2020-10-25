@@ -330,8 +330,10 @@
       "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]"
+        "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
