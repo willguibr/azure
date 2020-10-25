@@ -235,14 +235,14 @@
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[parameters('vnetaddressspace')]"
+            "[parameters('vnetAddressSpace')]"
           ]
         },
         "subnets": [
           {
             "name": "[parameters('subnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('vnetsubnetprefix')]",
+              "addressPrefix": "[parameters('vnetSubnetPrefix')]",
               "natGateway": {
                 "id": "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
               },
@@ -261,11 +261,10 @@
       "name": "[concat(parameters('virtualNetworkName'), '/mySubnet')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]",
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+        "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
       ],
       "properties": {
-        "addressPrefix": "[parameters('vnetsubnetprefix')]",
+        "addressPrefix": "[parameters('vnetSubnetPrefix')]",
         "natGateway": {
           "id": "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
         },
