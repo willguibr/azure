@@ -261,8 +261,7 @@
       "name": "[concat(parameters('virtualNetworkName'), '/mySubnet')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+        "[resourceId('Microsoft.Network/natGateways', parameters('natGatewayName'))]"
       ],
       "properties": {
         "addressPrefix": "[parameters('vnetSubnetPrefix')]",
@@ -278,6 +277,10 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'mySubnet')]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+      ],
       "properties": {
         "ipConfigurations": [
           {
