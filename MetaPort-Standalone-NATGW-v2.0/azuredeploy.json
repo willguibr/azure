@@ -87,8 +87,8 @@
         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
       }
     ],
-    "nicName": "VMNic",
-    "natGatewayName": "meta-NatGatewayName",
+    "nicName": "meta-VmNic",
+    "natGatewayName": "meta-NatGateway",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
@@ -325,7 +325,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/newuserscript')]",
+      "name": "[concat(variables('vmName'),'/metascript')]",
       "apiVersion": "2020-06-01",
       "location": "[variables('location')]",
       "dependsOn": [
