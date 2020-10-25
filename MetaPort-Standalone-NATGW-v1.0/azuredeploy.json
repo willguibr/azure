@@ -22,14 +22,14 @@
       }
     },
     "virtualNetworkName": {
-      "defaultValue": "Vnet",
+      "defaultValue": "myVnet",
       "type": "String",
       "metadata": {
         "description": "Name of the virtual network"
       }
     },
     "subnetName": {
-      "defaultValue": "Subnet",
+      "defaultValue": "mySubnet",
       "type": "String",
       "metadata": {
         "description": "Name of the subnet for virtual network"
