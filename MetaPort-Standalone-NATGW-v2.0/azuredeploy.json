@@ -320,13 +320,13 @@
                 "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
               }
             ]
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/metascript')]",
-      "apiVersion": "2020-06-01",
+          }
+        },
+        "resources": [
+              {
+      "name": "metaport-onboard",
+      "type": "extensions",
+      "apiVersion": "2019-03-01",
       "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
@@ -338,15 +338,20 @@
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "typeHandlerVersion": "2.1",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "fileUris": ["https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"]
-        },
+          "fileUris": [
+            "https://raw.githubusercontent.com/willguibr/azure/main/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"
+            ]
+          },
         "protectedSettings": {
           "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
+          }
         }
       }
-    }
+    ]
+  }
   ]
-}
+  }
+          
