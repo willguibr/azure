@@ -8,12 +8,6 @@
         "description": "This is the unique DNS name of the for the public IP for your VM"
       }
     },
-    "adminUsername": {
-      "type": "string",
-      "metadata": {
-        "description": "This is the username you wish to assign to your VMs admin account"
-      }
-    },
     "virtualMachineSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
@@ -24,6 +18,24 @@
       ], 
       "metadata": {
         "description": "Virtual Machine Size"
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "description": "VNET Name"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the subnet inside the VNET"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the username you wish to assign to your VMs admin account"
       }
     },
     "authenticationType": {
@@ -57,14 +69,15 @@
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
     "imageOffer": "UbuntuServer",
-    "subnetName": "Subnet-1",
+    "vmName": "[parameters('vmDnsName')]",
+    "virtualNetworkName": "[parameters('virtualNetworkName')]",
+    "subnetName": "[parameters('subnetName')]",
     "subnetPrefix": "10.0.0.0/24",
     "storageAccountType": "Standard_LRS",
     "publicIPAddressName": "publicIP",
     "publicIPAddressType": "Dynamic",
-    "vmName": "[parameters('vmDnsName')]",
     "location": "[resourceGroup().location]",
-    "virtualNetworkName": "WPVNET",
+
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
