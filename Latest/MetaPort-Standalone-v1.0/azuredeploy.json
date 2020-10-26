@@ -21,12 +21,14 @@
       }
     },
     "virtualNetworkName": {
+      "defaultValue": "meta-Vnet",
       "type": "string",
       "metadata": {
         "description": "VNET Name"
       }
     },
     "subnetName": {
+      "defaultValue": "meta-Subnet",
       "type": "string",
       "metadata": {
         "description": "Name of the subnet inside the VNET"
