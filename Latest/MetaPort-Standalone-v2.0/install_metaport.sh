@@ -11,7 +11,7 @@ sudo wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/met
 sudo chmod +x build/build_mp.sh
 
 sudo ./build/build_mp.sh
-sleep 15
+sleep 10
 
 # Token Code provided by the Customer during the Wizard configuration
 metaTokenCode=$1
