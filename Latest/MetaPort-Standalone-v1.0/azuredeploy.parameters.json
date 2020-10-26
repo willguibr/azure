@@ -14,6 +14,9 @@
     "subnetName": {
       "value": "GET-PREREQ-subnetName"
     },
+    "sshInboundMgmt": {
+      "value": "GET-PREREQ-sshInboundMgmt"
+    },
     "adminUsername": {
       "value": "GEN-UNIQUE"
     },

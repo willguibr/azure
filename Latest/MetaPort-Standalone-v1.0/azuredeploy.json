@@ -21,17 +21,24 @@
       }
     },
     "virtualNetworkName": {
-      "defaultValue": "meta-Vnet",
       "type": "String",
+      "defaultValue": "meta-Vnet",
       "metadata": {
         "description": "Name of the virtual network"
       }
     },
     "subnetName": {
-      "defaultValue": "meta-Subnet",
       "type": "String",
+      "defaultValue": "meta-Subnet",
       "metadata": {
         "description": "Name of the subnet for virtual network"
+      }
+    },
+    "sshInboundMgmt": {
+      "type": "String",
+      "defaultValue": "0.0.0.0/0",
+      "metadata": {
+        "description": "Source Allowed to manage the MetaPort"
       }
     },
     "adminUsername": {
@@ -75,6 +82,7 @@
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "subnetPrefix": "10.0.0.0/24",
+    "sshInboundMgmt": "[parameters('sshInboundMgmt')]",
     "storageAccountType": "Standard_LRS",
     "publicIPAddressName": "publicIP",
     "publicIPAddressType": "Dynamic",
@@ -123,7 +131,7 @@
               "direction": "Inbound",
               "destinationPortRange": "22",
               "protocol": "Tcp",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[variables('sshInboundMgmt')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }
