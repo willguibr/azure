@@ -33,7 +33,7 @@
     },
     "virtualNetworkName": {
       "type": "String",
-      "defaultValue": "meta-newVnet",
+      "defaultValue": "meta-Vnet",
       "metadata": {
         "description": "Name of the virtual network"
       }
@@ -98,7 +98,6 @@
     "publicIPAddressName": "publicIP",
     "publicIPAddressType": "Dynamic",
     "location": "[resourceGroup().location]",
-
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
@@ -115,10 +114,10 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('vNetNewOrExisting'), 'meta-newVnet')]",
+      "condition": "[equals(parameters('vNetNewOrExisting'), 'new')]",
       "apiVersion": "2019-11-01",
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('networkSecurityGroupName')]",
+      "name": "[variables('virtualNetworkName')]",
       "location": "[variables('location')]",
       "properties": {
         "addressSpace": {
