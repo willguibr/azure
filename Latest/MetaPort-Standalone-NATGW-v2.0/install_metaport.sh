@@ -5,4 +5,4 @@ sudo chmod +x build/build_mp.sh
 sudo ./build/build_mp.sh
 sleep 30
 metaTokenCode=$1
-su mpadmin -c metaport onboard $metaTokenCode
+su mpadmin -c "metaport onboard $metaTokenCode"
