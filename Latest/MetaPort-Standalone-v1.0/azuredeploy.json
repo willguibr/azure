@@ -33,7 +33,7 @@
     },
     "virtualNetworkName": {
       "type": "String",
-      "defaultValue": "meta-Vnet",
+      "defaultValue": "meta-newVnet",
       "metadata": {
         "description": "Name of the virtual network"
       }
@@ -115,7 +115,7 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('vNetNewOrExisting'), 'new')]",
+      "condition": "[equals(parameters('vNetNewOrExisting'), 'meta-newVnet')]",
       "apiVersion": "2019-11-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('networkSecurityGroupName')]",
@@ -128,7 +128,7 @@
         },
         "subnets": [
           {
-            "name": "[parameters('subnetName')]",
+            "name": "[variables('subnetName')]",
             "properties": {
               "addressPrefix": "[variables('subnetPrefix')]",
               "networkSecurityGroup": {
