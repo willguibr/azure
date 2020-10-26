@@ -71,6 +71,12 @@
       "metadata": {
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
       }
+    },
+    "metaTokenCode": {
+      "type": "securestring",
+      "metadata": {
+        "description": "MetaPort Token Code"
+      }
     }
   },
   "variables": {
@@ -318,7 +324,7 @@
         },
         "resources": [
               {
-              "name": "metaport-onboard",
+              "name": "metaport-install",
               "type": "extensions",
               "apiVersion": "2019-12-01",
               "location": "[resourceGroup().location]",
@@ -337,6 +343,24 @@
                   },
                 "protectedSettings": {
                     "commandToExecute": " ./metaport-install.sh "
+                  }
+                }
+              },
+              {
+              "name": "metaport-onboard",
+              "type": "extensions",
+              "apiVersion": "2019-12-01",
+              "location": "[resourceGroup().location]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+              ],
+              "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                  "commandToExecute": "[concat('metaport onbaord ', parameters('metaTokenCode'))]" 
                   }
                 }
               }
