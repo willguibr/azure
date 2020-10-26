@@ -95,7 +95,7 @@
     "imageOffer": "UbuntuServer",
     "storageAccountType": "Standard_LRS",
     "vmName": "[parameters('vmName')]",
-    "metaDevOpsLocation": "https://github.com/willguibr/azure/tree/main/Latest/MetaPort-Standalone-NATGW-v2.0/",
+    "metaDevOpsLocation": "https://github.com/willguibr/azure/tree/main/Latest/",
     "_extensionScript": "install_metaport.sh",
     "location": "[resourceGroup().location]",
     "linuxConfiguration": {
