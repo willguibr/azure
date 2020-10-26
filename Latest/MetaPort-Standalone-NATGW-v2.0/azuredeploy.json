@@ -338,11 +338,11 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                   "fileUris": [
-                    "https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh"
+                    "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"
                     ]
                   },
                 "protectedSettings": {
-                    "commandToExecute": " ./metaport-install.sh "
+                    "commandToExecute": " ./install_metaport.sh "
                   }
                 }
               },
