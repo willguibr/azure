@@ -14,12 +14,6 @@
         "description": "This is the username you wish to assign to your VMs admin account"
       }
     },
-    "metaTokenCode": {
-      "type": "securestring",
-      "metadata": {
-        "description": "MetaPort Token Code"
-      }
-    },
     "virtualMachineSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
@@ -47,6 +41,12 @@
       "type": "securestring",
       "metadata": {
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+      }
+    },
+    "metaTokenCode": {
+      "type": "securestring",
+      "metadata": {
+        "description": "MetaPort Token Code"
       }
     }
   },
