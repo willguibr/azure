@@ -22,16 +22,16 @@
     },
     "virtualNetworkName": {
       "defaultValue": "meta-Vnet",
-      "type": "string",
+      "type": "String",
       "metadata": {
-        "description": "VNET Name"
+        "description": "Name of the virtual network"
       }
     },
     "subnetName": {
       "defaultValue": "meta-Subnet",
-      "type": "string",
+      "type": "String",
       "metadata": {
-        "description": "Name of the subnet inside the VNET"
+        "description": "Name of the subnet for virtual network"
       }
     },
     "adminUsername": {
