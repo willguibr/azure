@@ -324,7 +324,7 @@
         },
         "resources": [
               {
-              "name": "metaport-install",
+              "name": "metaport-onboard",
               "type": "extensions",
               "apiVersion": "2019-12-01",
               "location": "[resourceGroup().location]",
@@ -339,28 +339,8 @@
                 "settings": {
                   "fileUris": [
                     "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"
-                    ]
-                  },
-                "protectedSettings": {
-                    "commandToExecute": " ./install_metaport.sh "
-                  }
-                }
-              },
-              {
-              "name": "metaport-onboard",
-              "type": "extensions",
-              "apiVersion": "2019-12-01",
-              "location": "[resourceGroup().location]",
-              "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-              ],
-              "properties": {
-                "publisher": "Microsoft.Azure.Extensions",
-                "type": "CustomScript",
-                "typeHandlerVersion": "2.0",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                  "commandToExecute": "[concat('metaport onbaord ', parameters('metaTokenCode'))]" 
+                    ],
+                  "commandToExecute": "[concat('./install_metaport.sh', 'metaport onbaord ', parameters('metaTokenCode'))]" 
                   }
                 }
               }
