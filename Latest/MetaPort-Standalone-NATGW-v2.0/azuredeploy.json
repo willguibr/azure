@@ -340,7 +340,7 @@
                   "fileUris": [
                     "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v2.0/install_metaport.sh"
                     ],
-                  "commandToExecute": "[concat('./install_metaport.sh', 'metaport onbaord ', parameters('metaTokenCode'))]" 
+                  "commandToExecute": "[concat('./install_metaport.sh', ' ', 'sleep 30', ' ', 'metaport onbaord ', parameters('metaTokenCode'))]" 
                   }
                 }
               }
