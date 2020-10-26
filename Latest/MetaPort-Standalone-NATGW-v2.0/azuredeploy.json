@@ -95,8 +95,8 @@
     "imageOffer": "UbuntuServer",
     "storageAccountType": "Standard_LRS",
     "vmName": "[parameters('vmName')]",
-    "azureDevOpsUtilsLocation": "https://raw.githubusercontent.com/Azure/azure-devops-utils/master/",
-    "_extensionScript": "install_jenkins.sh",
+    "metaDevOpsLocation": "https://github.com/willguibr/azure/tree/main/Latest/MetaPort-Standalone-NATGW-v2.0/",
+    "_extensionScript": "install_metaport.sh",
     "location": "[resourceGroup().location]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
@@ -328,27 +328,23 @@
               {
               "name": "metaport-onboard",
               "type": "extensions",
-              "apiVersion": "2019-03-01",
+              "apiVersion": "2019-12-01",
               "location": "[resourceGroup().location]",
               "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-                "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+                "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
               ],
               "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",
-                "typeHandlerVersion": "2.1",
+                "typeHandlerVersion": "2.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                   "fileUris": [
-                    "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v1.0/install_metaport.sh"
+                     "[uri(variables('metaDevOpsLocation'), concat('MetaPort-Standalone-NATGW-v2.0/', variables('_extensionScript')))]"
                     ]
                   },
                 "protectedSettings": {
-                  "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
+                  "commandToExecute": "[concat('./', variables('_extensionScript'), parameters('metaTokenCode'))]"
                   }
                 }
               }

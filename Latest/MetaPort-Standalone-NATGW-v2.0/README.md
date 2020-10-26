@@ -1,7 +1,8 @@
 # Standalone MetaPort Deployment for Azure Cloud
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fwillguibr%2Fazure%2Fmain%2FLatest%2FMetaPort-Standalone-NATGW-v1.0%2Fazuredeploy.json)
-[![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fwillguibr%2Fazure%2Fmain%2FLatest%2FMetaPort-Standalone-NATGW-v1.0%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Fwillguibr%2Fazure%2Fblob%2Fmain%2FLatest%2FMetaPort-Standalone-NATGW-v2.0%2Fazuredeploy.json)
+
+[![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fgithub.com%2Fwillguibr%2Fazure%2Fblob%2Fmain%2FLatest%2FMetaPort-Standalone-NATGW-v2.0%2Fazuredeploy.json)
 
 This template deploys a single **MetaPort appliance**, a **NAT gateway** and virtual network with a single subnet and public IP resource for the NAT gateway.
 
@@ -32,8 +33,5 @@ Description
 + **virtualNetworks**: Virtual network for NAT gateway.
   + **subnets**: Subnet for virtual network for NAT gateway.
 
-      <a href="https://github.com/willguibr/azure/blob/main/Latest/MetaPort-Standalone-NATGW-v1.0/images/RG-Components.png">
-         <img alt="Qries" src="https://github.com/willguibr/azure/blob/main/Latest/MetaPort-Standalone-NATGW-v1.0/images/RG-Components.png">
-      </a>
 
 `Tags: virtual network, vnet, nat, nat gateway`
