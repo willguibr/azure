@@ -8,11 +8,14 @@
     "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
+    "vNetNewOrExisting": {
+      "value": "existing"
+  },
     "virtualNetworkName": {
-      "value": "GET-PREREQ-virtualNetworkName"
-    },
+    "value": "GEN-VNET-NAME"
+  },
     "subnetName": {
-      "value": "GET-PREREQ-subnetName"
+      "value": "GEN-VNET-SUBNET1-NAME"
     },
     "sshInboundMgmt": {
       "value": "GET-PREREQ-sshInboundMgmt"
