@@ -71,12 +71,6 @@
       "metadata": {
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
       }
-    },
-    "metaTokenCode": {
-      "type": "securestring",
-      "metadata": {
-        "description": "MetaPort Token Code"
-      }
     }
   },
   "variables": {
@@ -95,8 +89,6 @@
     "imageOffer": "UbuntuServer",
     "storageAccountType": "Standard_LRS",
     "vmName": "[parameters('vmName')]",
-    "metaDevOpsLocation": "https://github.com/willguibr/azure/tree/main/Latest/",
-    "_extensionScript": "install_metaport.sh",
     "location": "[resourceGroup().location]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
@@ -340,11 +332,11 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                   "fileUris": [
-                     "[uri(variables('metaDevOpsLocation'), concat('MetaPort-Standalone-NATGW-v2.0/', variables('_extensionScript')))]"
+                    "https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh"
                     ]
                   },
                 "protectedSettings": {
-                  "commandToExecute": "[concat('./', variables('_extensionScript'), parameters('metaTokenCode'))]"
+                    "commandToExecute": " ./metaport-install.sh "
                   }
                 }
               }
