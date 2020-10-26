@@ -92,7 +92,7 @@
         ]
       }
     },
-    "networkSecurityGroupName": "default-NSG"
+    "networkSecurityGroupName": "meta-NSG"
   },
   "resources": [
     {
