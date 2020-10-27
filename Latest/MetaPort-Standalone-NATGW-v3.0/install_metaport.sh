@@ -16,7 +16,7 @@ sudo wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/met
 sudo chmod +x build/build_mp.sh
 
 # Starting MetaPort Software Installation
-# export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 sudo ./build/build_mp.sh
 sleep 10
 
