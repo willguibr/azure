@@ -48,10 +48,10 @@
     },
     "natGatewayNeeded": {
       "type": "string",
-      "defaultValue": "yes",
+      "defaultValue": "no",
       "allowedValues": [
-        "yes",
-        "no"
+        "no",
+        "yes"
       ],
       "metadata": {
         "description": "Specify whether to create a new or existing virtual network for the VM."
@@ -160,7 +160,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
       "type": "Microsoft.Network/natGateways",
       "apiVersion": "2019-11-01",
       "name": "[variables('natGatewayName')]",
