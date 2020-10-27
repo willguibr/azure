@@ -214,8 +214,7 @@
       "apiVersion": "2019-11-01",
       "name": "[concat(variables('virtualNetworkName'), '/meta-Subnet')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
-        "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]"
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
       ],
       "properties": {
         "addressPrefix": "[parameters('vnetSubnetPrefix')]",
@@ -320,7 +319,6 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
-        "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]",
         "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ],
       "properties": {
