@@ -302,11 +302,5 @@
         }
       }
     }
-  ],
-"outputs": {
-  "resourceID": {
-    "type": "string",
-    "value": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
-  }
-}
+  ]
 }
