@@ -120,7 +120,7 @@
     "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
-    "nicName": "[concat(resourceGroup().name, '-Nic')]",
+    "nicName": "meta-VmNic",
     "natGatewayName": "meta-NatGateway",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
