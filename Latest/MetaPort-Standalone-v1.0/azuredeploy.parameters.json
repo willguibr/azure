@@ -8,7 +8,7 @@
     "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
-    "vNetNewOrExisting": {
+    "vnetNewOrExisting": {
       "value": "existing"
   },
     "virtualNetworkName": {
@@ -17,7 +17,7 @@
     "subnetName": {
       "value": "GEN-VNET-SUBNET1-NAME"
     },
-    "sshInboundMgmt": {
+    "sSHInboundMgmt": {
       "value": "GET-PREREQ-sshInboundMgmt"
     },
     "adminUsername": {

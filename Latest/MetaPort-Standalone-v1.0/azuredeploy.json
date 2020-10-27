@@ -20,7 +20,7 @@
         "description": "Virtual Machine Size"
       }
     },
-    "vNetNewOrExisting": {
+    "vnetNewOrExisting": {
       "type": "string",
       "defaultValue": "new",
       "allowedValues": [
@@ -45,7 +45,7 @@
         "description": "Name of the subnet for virtual network"
       }
     },
-    "sshInboundMgmt": {
+    "sSHInboundMgmt": {
       "type": "String",
       "defaultValue": "0.0.0.0/0",
       "metadata": {
