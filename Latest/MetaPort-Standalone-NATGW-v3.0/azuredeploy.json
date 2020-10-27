@@ -210,6 +210,7 @@
       }
     },
     {
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "apiVersion": "2019-11-01",
       "name": "[concat(variables('virtualNetworkName'), '/meta-Subnet')]",
