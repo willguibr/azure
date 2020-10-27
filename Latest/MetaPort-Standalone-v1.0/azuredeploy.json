@@ -114,7 +114,7 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('vNetNewOrExisting'), 'new')]",
+      "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
       "apiVersion": "2020-05-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
