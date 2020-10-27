@@ -17,7 +17,7 @@
     "subnetName": {
       "value": "GEN-VNET-SUBNET1-NAME"
     },
-    "sSHInboundMgmt": {
+    "SSHInboundMgmt": {
       "value": "GET-PREREQ-sshInboundMgmt"
     },
     "adminUsername": {

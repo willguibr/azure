@@ -45,7 +45,7 @@
         "description": "Name of the subnet for virtual network"
       }
     },
-    "sSHInboundMgmt": {
+    "SSHInboundMgmt": {
       "type": "String",
       "defaultValue": "0.0.0.0/0",
       "metadata": {
@@ -93,7 +93,7 @@
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "subnetPrefix": "10.0.0.0/24",
-    "sshInboundMgmt": "[parameters('sshInboundMgmt')]",
+    "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "storageAccountType": "Standard_LRS",
     "publicIPAddressName": "publicIP",
     "publicIPAddressType": "Dynamic",
@@ -192,7 +192,7 @@
               "direction": "Inbound",
               "destinationPortRange": "22",
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[variables('sshInboundMgmt')]",
+              "sourceAddressPrefix": "[variables('SSHInboundMgmt')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }
