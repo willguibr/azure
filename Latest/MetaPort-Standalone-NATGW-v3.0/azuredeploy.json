@@ -48,10 +48,10 @@
     },
     "natGatewayNeeded": {
       "type": "string",
-      "defaultValue": "no",
+      "defaultValue": "yes",
       "allowedValues": [
-        "no",
-        "yes"
+        "yes",
+        "no"
       ],
       "metadata": {
         "description": "Specify whether to create a new or existing virtual network for the VM."
@@ -143,6 +143,7 @@
   },
   "resources":  [
     {
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2019-11-01",
       "name": "[variables('publicIpName')]",
@@ -160,7 +161,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
       "type": "Microsoft.Network/natGateways",
       "apiVersion": "2019-11-01",
       "name": "[variables('natGatewayName')]",
