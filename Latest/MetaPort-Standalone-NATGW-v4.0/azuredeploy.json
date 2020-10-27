@@ -360,6 +360,29 @@
     },
       {
       "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('vmName'),'/metaport-install')]",
+      "apiVersion": "2020-06-01",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.1",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh"
+          ]
+        },
+        "protectedSettings": {
+          "commandToExecute": "sh metaport-install.sh"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'),'/meta-onboard')]",
       "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
@@ -373,7 +396,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v3.0/install_metaport.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v4.0/install_metaport.sh"
           ]
         },
         "protectedSettings": {
@@ -381,15 +404,6 @@
         }
       }
     }
-  ],
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": true,
-            "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), variables('storageAccountAPIVersion')).primaryEndpoints.blob)]"
-          }
-        }
-      }
-    }
+  ]
 }
-  
           
