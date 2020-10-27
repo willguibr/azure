@@ -121,7 +121,6 @@
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "nicName": "[concat(resourceGroup().name, '-Nic')]",
-    "nsgName": "[concat(resourceGroup().name, '-NSG')]",
     "natGatewayName": "meta-NatGateway",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
@@ -360,7 +359,7 @@
     },
       {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/meta-onboard')]",
+      "name": "[concat(variables('vmName'),'/metaport-onboard')]",
       "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
       "dependsOn": [
