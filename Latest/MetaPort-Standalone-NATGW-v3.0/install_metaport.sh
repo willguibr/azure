@@ -11,9 +11,11 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt-get -q -y install python3-pip
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get install -y python3-wheel
-export DEBIAN_FRONTEND=noninteractive
-pip3 install wheel
-sudo apt -o APT::Sandbox::User=root update
+# export DEBIAN_FRONTEND=noninteractive
+# pip3 install wheel
+# sudo apt -o APT::Sandbox::User=root update
+sudo rm -rf /var/lib/apt/lists/*
+sudo apt-get -qq -y update
 sudo mkdir build
 sudo wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh
 sudo chmod +x build/build_mp.sh
