@@ -129,7 +129,7 @@
           {
             "name": "[variables('subnetName')]",
             "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]",
+              "addressPrefix": "[variables('subnetPrefix')]"
             }
           }
         ]
