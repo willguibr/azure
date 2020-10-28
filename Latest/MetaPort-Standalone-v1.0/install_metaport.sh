@@ -10,4 +10,4 @@ sleep 30
 metaTokenCode=$1
 
 # Initiating Onboarding Process
-su mpadmin -c "metaport onboard $metaTokenCode"
+metaport onboard $metaTokenCode
