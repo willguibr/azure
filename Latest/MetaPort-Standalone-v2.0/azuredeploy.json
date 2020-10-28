@@ -214,7 +214,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'),'/meta-onboard')]",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
@@ -227,10 +227,10 @@
         "settings": {
           "fileUris": [
             "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-v2.0/install_metaport.sh"
-            ]
-          },
+          ]
+        },
         "protectedSettings": {
-          "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
+          "commandToExecute": "[concat('sudo ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"      
         }
       }
     }
