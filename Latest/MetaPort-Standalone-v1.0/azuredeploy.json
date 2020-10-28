@@ -281,7 +281,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/metaport-install')]",
+      "name": "[concat(variables('vmName'),'/meta-onboard')]",
       "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
       "dependsOn": [
@@ -298,30 +298,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "sudo ./metaport_install.sh"    
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/metaport-onboard')]",
-      "apiVersion": "2019-12-01",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-v1.0/install_metaport.sh"
-          ]
-        },
-        "protectedSettings": {
-          "commandToExecute": "[concat(parameters('metaTokenCode'))]"      
+          "commandToExecute": "[concat('sudo ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"      
         }
       }
     }
