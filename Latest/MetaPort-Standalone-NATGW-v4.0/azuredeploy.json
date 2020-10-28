@@ -377,7 +377,7 @@
         },
         "protectedSettings": {
           "commandToExecute":
-              "[concat('mkdir build  && wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh  && chmod +x build/build_mp.sh && ./build/build_mp.sh', './install_metaport.sh', parameters('metaTokenCode'))]"
+              "[concat('mkdir build && wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh && chmod +x build/build_mp.sh && ./build/build_mp.sh', './install_metaport.sh', parameters('metaTokenCode'))]"
           }
         }
       }
