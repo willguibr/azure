@@ -5,4 +5,3 @@ wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport
 chmod +x build/build_mp.sh
 ./build/build_mp.sh
 sleep 15
-
