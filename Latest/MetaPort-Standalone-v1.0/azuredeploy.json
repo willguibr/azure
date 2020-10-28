@@ -298,7 +298,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('sudo cp /var/lib/waagent/custom-script/download/0/install_metaport.sh /home/ubuntu && sudo chown ubuntu /home/ubuntu/install_metaport.sh && sudo chmod u+rx,go-w /home/ubuntu/install_metaport.sh && sh install_metaport.sh', parameters('metaTokenCode'))]"
+          "commandToExecute": "[concat('sudo cp /var/lib/waagent/custom-script/download/0/install_metaport.sh /home/ubuntu && sudo chown ubuntu /home/ubuntu/install_metaport.sh && sudo chmod u+rx,go-w /home/ubuntu/install_metaport.sh && sh install_metaport.sh ', parameters('metaTokenCode'))]"      
         }
       }
     }
