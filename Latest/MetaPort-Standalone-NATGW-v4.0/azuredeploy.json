@@ -110,18 +110,18 @@
   },
   "variables": {
     "PublicIpdns": "[concat('gw-', uniqueString(resourceGroup().id))]",
-    "publicIpName": "[concat(variables('natGatewayName'), 'ip')]",
+    "publicIpName": "[concat(variables('natGatewayName'), '-ip')]",
     "publicIpAddresses": [
       {
         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
       }
     ],
-    "vmName": "[parameters('vmName')]",
+    "vmName": "[concat(parameters('vmName'), '-vm')]",
     "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
-    "nicName": "meta-VmNic",
-    "natGatewayName": "meta-NatGateway",
+    "nicName": "[concat(variables('vmName'), '-nic')]",
+    "natGatewayName": "[concat(variables('virtualNetworkName'), '-natgw')]",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
@@ -357,10 +357,10 @@
         }
       }
     },
-      {
+    {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'),'/metaport-onboard')]",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
@@ -368,18 +368,17 @@
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
-        "typeHandlerVersion": "2.1",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://github.com/willguibr/azure/blob/main/Latest/MetaPort-Standalone-NATGW-v4.0/install_metaport.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v4.0/install_metaport.sh"
           ]
         },
         "protectedSettings": {
-          "commandToExecute":
-              "[concat('mkdir build && wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh && chmod +x build/build_mp.sh && ./build/build_mp.sh', './install_metaport.sh', parameters('metaTokenCode'))]"
-          }
+          "commandToExecute": "[concat('sudo ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"      
         }
       }
-    ]
-  }
+    }
+  ]
+}
