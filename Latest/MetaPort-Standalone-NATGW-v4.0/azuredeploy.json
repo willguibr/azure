@@ -116,7 +116,7 @@
         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
       }
     ],
-    "vmName": "[parameters('vmName')]",
+    "vmName": "[concat(parameters('vmName'), '-vm')]",
     "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
