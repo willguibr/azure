@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 30
+sleep 15
 mkdir build
 wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh
 chmod +x build/build_mp.sh
@@ -10,4 +10,4 @@ sleep 15
 metaTokenCode=$1
 
 # Initiating Onboarding Process
-su mpadmin -c "metaport onboard $metaTokenCode" > metaport_onboard.txt
+sudo -u mpadmin -i "metaport onboard $metaTokenCode" > metaport_onboard.txt
