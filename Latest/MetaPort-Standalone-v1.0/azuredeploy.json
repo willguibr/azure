@@ -298,7 +298,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('sudo ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"      
+          "commandToExecute": "[concat('sudo chmod 777 . && ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"   
         }
       }
     }
