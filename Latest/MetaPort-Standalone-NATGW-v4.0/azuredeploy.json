@@ -372,7 +372,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://github.com/willguibr/azure/blob/main/Latest/MetaPort-Standalone-NATGW-v4.0/install_metaport.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v4.0/install_metaport.sh"
           ]
         },
         "protectedSettings": {
