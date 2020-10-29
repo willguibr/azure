@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "metaportName": {
+    "vmName": {
       "type": "string",
       "metadata": {
         "description": "This is the unique DNS name of the for the public IP for your VM"
@@ -74,22 +74,16 @@
       "metadata": {
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
       }
-    },
-    "metaTokenCode": {
-      "type": "securestring",
-      "metadata": {
-        "description": "MetaPort Token Code"
-      }
     }
   },
   "variables": {
-    "nicName": "meta-VMNic",
+    "nicName": "VMNic",
     "addressPrefix": "10.0.0.0/16",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
     "imageOffer": "UbuntuServer",
-    "vmName": "[parameters('metaportName')]",
+    "vmName": "[parameters('vmName')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "subnetPrefix": "10.0.0.0/24",
@@ -169,7 +163,7 @@
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('metaportName')]"
+          "domainNameLabel": "[parameters('vmName')]"
         }
       }
     },
@@ -195,39 +189,13 @@
             }
           },
           {
-            "name": "Outbound-HTTPS-Traffic",
-            "properties": {
-              "priority": 2000,
-              "access": "Allow",
-              "direction": "Outbound",
-              "destinationPortRange": "443",
-              "protocol": "Tcp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
-          },
-          {
-            "name": "Outbound-IKE-Traffic",
-            "properties": {
-              "priority": 2001,
-              "access": "Allow",
-              "direction": "Outbound",
-              "destinationPortRange": "500",
-              "protocol": "Udp",
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*"
-            }
-          },
-          {
-            "name": "Outbound-NATT-Traffic",
+            "name": "Outbound-Traffic",
             "properties": {
               "priority": 2002,
               "access": "Allow",
               "direction": "Outbound",
-              "destinationPortRange": "4500",
-              "protocol": "Udp",
+              "destinationPortRange": "*",
+              "protocol": "*",
               "sourceAddressPrefix": "*",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
@@ -276,31 +244,32 @@
                 "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
               }
             ]
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/meta-onboard')]",
-      "apiVersion": "2019-12-01",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-v1.0/install_metaport.sh"
-          ]
+          }
         },
-        "protectedSettings": {
-          "commandToExecute": "[concat('sh install_metaport.sh ', parameters('metaTokenCode'))]"
+      "resources":[
+          {
+          "name": "sgio-custom-script",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2018-10-01",
+          "dependsOn": [
+            "[variables('vmName')]"
+                ],
+                "tags": {
+                  "displayName": "Execute my custom script"
+                },
+          "properties": {
+          "publisher": "Microsoft.Azure.Extensions",
+          "type": "CustomScript",
+          "typeHandlerVersion": "2.0",
+          "autoUpgradeMinorVersion": true,
+          "protectedSettings": {
+            "commandToExecute": "apt-get -y update"
+            }
+          }
         }
-      }
+      ]
     }
   ]
 }
+      
