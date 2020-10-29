@@ -139,7 +139,7 @@
         ]
       }
     },
-    "networkSecurityGroupName": "[concat(variables('vmName'), '-nsg')]",
+    "networkSecurityGroupName": "[concat(variables('vmName'), '-nsg')]"
   },
   "resources":  [
     {
