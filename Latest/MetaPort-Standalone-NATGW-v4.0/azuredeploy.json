@@ -359,7 +359,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/meta-onboard')]",
+      "name": "[concat(variables('vmName'),'/metaport-onboard')]",
       "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
       "dependsOn": [
