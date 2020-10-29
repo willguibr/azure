@@ -110,7 +110,7 @@
   },
   "variables": {
     "PublicIpdns": "[concat('gw-', uniqueString(resourceGroup().id))]",
-    "publicIpName": "[concat(variables('natGatewayName'), 'ip')]",
+    "publicIpName": "[concat(variables('natGatewayName'), '-ip')]",
     "publicIpAddresses": [
       {
         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
@@ -120,8 +120,8 @@
     "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
-    "nicName": "meta-VmNic",
-    "natGatewayName": "meta-NatGateway",
+    "nicName": "[concat(variables('vmName'), '-nic')]",
+    "natGatewayName": "[concat(variables('virtualNetworkName'), '-natgw')]",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
