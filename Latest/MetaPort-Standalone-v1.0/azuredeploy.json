@@ -298,7 +298,7 @@
           ]
         },
         "protectedSettings": {
-           "commandToExecute": "[concat('sh ./azure_custom_script_mp_install', ' ', parameters('metaTokenCode'))]"   
+           "commandToExecute": "[concat('sh ./azure_custom_script_mp_install.sh', ' ', parameters('metaTokenCode'))]"  
         }
       }
     }
