@@ -15,4 +15,5 @@ metaTokenCode=$1
 # Starting Onboard process (as mpadmin)
 sudo -u mpadmin -i metaport onboard $metaTokenCode > metaport_onboard.txt
 
+# Restart system after 2 minutes
 shutdown -r +2
