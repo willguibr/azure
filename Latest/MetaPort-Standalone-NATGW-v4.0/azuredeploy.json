@@ -376,7 +376,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('sudo mv install_metaport.sh /tmp && chown ubuntu:ubuntu /tmp/install_metaport.sh && chmod +x /tmp/install_metaport.sh && cd /tmp && sudo -u ubuntu -i sh /tmp/install_metaport.sh', ' ', parameters('metaTokenCode'))]"   
+          "commandToExecute": "[concat('chmod 777 . && sudo -u ubuntu -i && mkdir build && wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh && chmod +x build/build_mp.sh && ./build/build_mp.sh && sleep 15 && sh ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"   
         }
       }
     }
