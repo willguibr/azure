@@ -372,11 +372,11 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v4.0/install_metaport.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v4.0/azure_custom_script_mp_install.sh"
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('chmod 777 . && sudo -u ubuntu -i && mkdir build && wget -q -Obuild/build_mp.sh https://s3.amazonaws.com/public.nsof.io/lxd/metaport-install.sh && chmod +x build/build_mp.sh && ./build/build_mp.sh && sleep 15 && sh ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"   
+          "commandToExecute": "[concat('sh ./azure_custom_script_mp_install.sh', ' ', parameters('metaTokenCode'))]"   
         }
       }
     }
