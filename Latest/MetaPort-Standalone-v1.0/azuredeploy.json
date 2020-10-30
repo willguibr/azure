@@ -294,11 +294,11 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-v1.0/install_metaport.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-v1.0/azure_custom_script_mp_install"
           ]
         },
         "protectedSettings": {
-           "commandToExecute": "[concat('sh ./install_metaport.sh', ' ', parameters('metaTokenCode'))]"   
+           "commandToExecute": "[concat('sh ./azure_custom_script_mp_install', ' ', parameters('metaTokenCode'))]"   
         }
       }
     }
