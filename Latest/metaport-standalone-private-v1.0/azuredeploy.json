@@ -13,12 +13,10 @@
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
       "allowedValues": [
-        "Standard_DS2_v2",
         "Standard_D2s_v3",
-        "Standard_D3s_v2",
         "Standard_DS4_v2",
         "Standard_DS5_v2"
-      ], 
+      ],
       "metadata": {
         "description": "Virtual Machine Size"
       }
@@ -96,6 +94,13 @@
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
       }
     },
+    "SSHInboundMgmt": {
+      "type": "String",
+      "defaultValue": "0.0.0.0/0",
+      "metadata": {
+        "description": "Source Allowed to manage the MetaPort"
+      }
+    },
     "metaTokenCode": {
       "type": "securestring",
       "metadata": {
@@ -112,6 +117,7 @@
       }
     ],
     "vmName": "[concat(parameters('vmName'), '-vm')]",
+    "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
@@ -137,7 +143,7 @@
   },
   "resources":  [
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2019-11-01",
       "name": "[variables('publicIpName')]",
@@ -155,7 +161,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
       "type": "Microsoft.Network/natGateways",
       "apiVersion": "2019-11-01",
       "name": "[variables('natGatewayName')]",
@@ -172,7 +178,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('vnetNewOrExisting'), 'existing')]",
+      "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2019-11-01",
       "name": "[variables('virtualNetworkName')]",
@@ -204,7 +210,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "apiVersion": "2019-11-01",
       "name": "[concat(variables('virtualNetworkName'), '/meta-Subnet')]",
@@ -259,7 +265,7 @@
               "direction": "Inbound",
               "destinationPortRange": "22",
               "protocol": "Tcp",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[variables('SSHInboundMgmt')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }
@@ -366,7 +372,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/metaport-standalone-private-v1.0/azure_custom_script_mp_install.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v4.0/azure_custom_script_mp_install.sh"
           ]
         },
         "protectedSettings": {
