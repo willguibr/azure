@@ -99,7 +99,7 @@
         ]
       }
     },
-    "networkSecurityGroupName": "meta-NSG"
+    "networkSecurityGroupName": "[concat(variables('vmName'), '-nsg')]"
   },
   "resources": [
     {
