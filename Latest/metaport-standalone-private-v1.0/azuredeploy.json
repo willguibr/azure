@@ -70,7 +70,7 @@
     "existingVirtualNetworkResourceGroup": "[resourceGroup().name]",
     "existingVirtualNetworkName": "[concat(parameters('virtualNetworkName'))]",
     "vmName": "[concat(parameters('vmName'), '-vm')]",
-    "nicName": "[concat(variables('vmName'), '-nic')]",
+    "nicName": "[concat(variables('vmName'), '-nic1')]",
     "subnetRef": "[resourceId(variables('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('existingVirtualNetworkName'), parameters('subnetName'))]",
     "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
