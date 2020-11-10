@@ -1,0 +1,9 @@
+{
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "type": "QuickStart",
+  "itemDisplayName": "Deploy a single MetaPort Connector",
+  "description": "This template deploys and onboard a single MetaPort Connector.",
+  "summary": "Deploy a single MetaPort Connector",
+  "githubUsername": "willguibr",
+  "dateUpdated": "2020-11-10"
+}
