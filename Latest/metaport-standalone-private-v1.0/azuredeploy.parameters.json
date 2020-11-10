@@ -20,7 +20,6 @@
     "adminPasswordOrKey": {
       "value": "GEN-SSH-PUB-KEY"
     },
-
     "metaTokenCode": {
       "value": "GEN-PASSWORD"
     }
