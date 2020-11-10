@@ -13,17 +13,19 @@
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
       "allowedValues": [
+        "Standard_DS2_v2",
         "Standard_D2s_v3",
+        "Standard_D3s_v2",
         "Standard_DS4_v2",
         "Standard_DS5_v2"
-      ],
+      ], 
       "metadata": {
         "description": "Virtual Machine Size"
       }
     },
     "vnetNewOrExisting": {
       "type": "string",
-      "defaultValue": "new",
+      "defaultValue": "existing",
       "allowedValues": [
         "new",
         "existing"
@@ -48,7 +50,7 @@
     },
     "natGatewayNeeded": {
       "type": "string",
-      "defaultValue": "yes",
+      "defaultValue": "no",
       "allowedValues": [
         "yes",
         "no"
@@ -94,13 +96,6 @@
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
       }
     },
-    "SSHInboundMgmt": {
-      "type": "String",
-      "defaultValue": "0.0.0.0/0",
-      "metadata": {
-        "description": "Source Allowed to manage the MetaPort"
-      }
-    },
     "metaTokenCode": {
       "type": "securestring",
       "metadata": {
@@ -117,7 +112,6 @@
       }
     ],
     "vmName": "[concat(parameters('vmName'), '-vm')]",
-    "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
@@ -143,7 +137,7 @@
   },
   "resources":  [
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2019-11-01",
       "name": "[variables('publicIpName')]",
@@ -161,7 +155,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
       "type": "Microsoft.Network/natGateways",
       "apiVersion": "2019-11-01",
       "name": "[variables('natGatewayName')]",
@@ -178,7 +172,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
+      "condition": "[equals(parameters('vnetNewOrExisting'), 'existing')]",
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2019-11-01",
       "name": "[variables('virtualNetworkName')]",
@@ -210,7 +204,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
+      "condition": "[equals(parameters('natGatewayNeeded'), 'no')]",
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "apiVersion": "2019-11-01",
       "name": "[concat(variables('virtualNetworkName'), '/meta-Subnet')]",
@@ -265,7 +259,7 @@
               "direction": "Inbound",
               "destinationPortRange": "22",
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[variables('SSHInboundMgmt')]",
+              "sourceAddressPrefix": "*",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }

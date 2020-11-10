@@ -20,9 +20,6 @@
     "natGatewayNeeded": {
       "value": "no"
     },
-    "SSHInboundMgmt": {
-      "value": "GET-PREREQ-sshInboundMgmt"
-    },
     "adminUsername": {
       "value": "GEN-UNIQUE"
     },
