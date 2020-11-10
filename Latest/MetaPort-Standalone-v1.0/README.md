@@ -4,7 +4,7 @@
 [![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fwillguibr%2Fazure%2Fmain%2FLatest%2FMetaPort-Standalone-v1.0%2Fazuredeploy.json)
 
 ## Pre-Requisite
-Plese note: This deployment template creates and attach an existing Network Security Group to the virtual machine, in order to allow connectivity to the Proofpoint Meta Cloud.
+This template creates a single virtual machine and a security group Network Security Group, in order to allow outbound connectivity to the Proofpoint Meta Cloud.
 
 ## Note
 1. This template deploys and onboard a single MetaPort Connector into a Public subnet.
