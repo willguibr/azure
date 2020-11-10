@@ -8,11 +8,20 @@
     "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
+    "vnetNewOrExisting": {
+      "value": "existing"
+    },
     "virtualNetworkName": {
       "value": "GET-PREREQ-virtualNetworkName"
     },
     "subnetName": {
-      "value": "GET-PREREQ-subnet1Name"
+      "value": "GET-PREREQ-subnetName"
+    },
+    "natGatewayNeeded": {
+      "value": "no"
+    },
+    "SSHInboundMgmt": {
+      "value": "GET-PREREQ-sshInboundMgmt"
     },
     "adminUsername": {
       "value": "GEN-UNIQUE"

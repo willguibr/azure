@@ -1,3 +1,4 @@
+
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
@@ -12,34 +13,62 @@
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
       "allowedValues": [
-        "Standard_DS2_v2",
         "Standard_D2s_v3",
-        "Standard_D3s_v2",
         "Standard_DS4_v2",
         "Standard_DS5_v2"
-      ], 
+      ],
       "metadata": {
         "description": "Virtual Machine Size"
       }
     },
+    "vnetNewOrExisting": {
+      "type": "string",
+      "defaultValue": "new",
+      "allowedValues": [
+        "new",
+        "existing"
+      ],
+      "metadata": {
+        "description": "Specify whether to create a new or existing virtual network for the VM."
+      }
+    },
     "virtualNetworkName": {
+      "defaultValue": "meta-Vnet",
       "type": "String",
-      "defaultValue": "vNet",
       "metadata": {
         "description": "Name of the virtual network"
       }
     },
     "subnetName": {
+      "defaultValue": "meta-Subnet",
       "type": "String",
-      "defaultValue": "subnetName",
       "metadata": {
         "description": "Name of the subnet for virtual network"
       }
     },
-    "adminUsername": {
+    "natGatewayNeeded": {
       "type": "string",
+      "defaultValue": "yes",
+      "allowedValues": [
+        "yes",
+        "no"
+      ],
       "metadata": {
-        "description": "This is the username you wish to assign to your VMs admin account"
+        "description": "Specify whether to create a new or existing virtual network for the VM."
+      }
+    },
+    "vnetAddressSpace": {
+      "defaultValue": "192.168.0.0/16",
+      "type": "String",
+      "metadata": {
+        "description": "Address space for virtual network"
+      }
+    },
+    "vnetSubnetPrefix": {
+      "defaultValue": "192.168.0.0/24",
+      "type": "String",
+      "metadata": {
+        "description": "Subnet prefix for virtual network"
       }
     },
     "authenticationType": {
@@ -53,10 +82,23 @@
         "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
       }
     },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the username you wish to assign to your VMs admin account"
+      }
+    },
     "adminPasswordOrKey": {
       "type": "securestring",
       "metadata": {
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+      }
+    },
+    "SSHInboundMgmt": {
+      "type": "String",
+      "defaultValue": "0.0.0.0/0",
+      "metadata": {
+        "description": "Source Allowed to manage the MetaPort"
       }
     },
     "metaTokenCode": {
@@ -67,17 +109,25 @@
     }
   },
   "variables": {
-    "existingVirtualNetworkResourceGroup": "[resourceGroup().name]",
-    "existingVirtualNetworkName": "[concat(parameters('virtualNetworkName'))]",
+    "PublicIpdns": "[concat('gw-', uniqueString(resourceGroup().id))]",
+    "publicIpName": "[concat(variables('natGatewayName'), '-ip')]",
+    "publicIpAddresses": [
+      {
+        "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
+      }
+    ],
     "vmName": "[concat(parameters('vmName'), '-vm')]",
-    "nicName": "[concat(variables('vmName'), '-nic1')]",
-    "subnetRef": "[resourceId(variables('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('existingVirtualNetworkName'), parameters('subnetName'))]",
-    "storageAccountType": "Standard_LRS",
-    "location": "[resourceGroup().location]",
+    "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
+    "virtualNetworkName": "[parameters('virtualNetworkName')]",
+    "subnetName": "[parameters('subnetName')]",
+    "nicName": "[concat(variables('vmName'), '-nic')]",
+    "natGatewayName": "[concat(variables('virtualNetworkName'), '-natgw')]",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
     "imageOffer": "UbuntuServer",
+    "storageAccountType": "Standard_LRS",
+    "location": "[resourceGroup().location]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -91,8 +141,114 @@
     },
     "networkSecurityGroupName": "[concat(variables('vmName'), '-nsg')]"
   },
-  "resources": [
-
+  "resources":  [
+    {
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2019-11-01",
+      "name": "[variables('publicIpName')]",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {
+        "publicIPAddressVersion": "IPv4",
+        "publicIPAllocationMethod": "Static",
+        "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "[variables('publicipdns')]"
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
+      "type": "Microsoft.Network/natGateways",
+      "apiVersion": "2019-11-01",
+      "name": "[variables('natGatewayName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicipname'))]"
+      ],
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {
+        "idleTimeoutInMinutes": 4,
+        "publicIpAddresses": "[if(not(empty(variables('publicipdns'))), variables('publicIpAddresses'), json('null'))]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2019-11-01",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressSpace')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnetname')]",
+            "properties": {
+              "addressPrefix": "[parameters('vnetSubnetPrefix')]",
+              "natGateway": {
+                "id": "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]"
+              },
+              "privateEndpointNetworkPolicies": "Enabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+          }
+        ],
+        "enableDdosProtection": false,
+        "enableVmProtection": false
+      }
+    },
+    {
+      "condition": "[equals(parameters('natGatewayNeeded'), 'yes')]",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2019-11-01",
+      "name": "[concat(variables('virtualNetworkName'), '/meta-Subnet')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
+      ],
+      "properties": {
+        "addressPrefix": "[parameters('vnetSubnetPrefix')]",
+        "natGateway": {
+          "id": "[resourceId('Microsoft.Network/natGateways', variables('natGatewayName'))]"
+        },
+        "privateEndpointNetworkPolicies": "Enabled",
+        "privateLinkServiceNetworkPolicies": "Enabled"
+      }
+    },
+    {
+      "apiVersion": "2020-05-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), 'meta-Subnet')]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
     {
       "comments": "Default Network Security Group for template",
       "type": "Microsoft.Network/networkSecurityGroups",
@@ -109,7 +265,7 @@
               "direction": "Inbound",
               "destinationPortRange": "22",
               "protocol": "Tcp",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[variables('SSHInboundMgmt')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }
@@ -157,42 +313,14 @@
       }
     },
     {
-      "apiVersion": "2020-05-01",
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('nicName')]",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('existingVirtualNetworkName'), 'mySubnet')]",
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              },
-              "primary": true,
-              "privateIPAddressVersion": "IPv4"
-            }
-          }
-        ],
-        "enableAcceleratedNetworking": false,
-        "enableIPForwarding": false,
-        "networkSecurityGroup": {
-          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-        }
-      }
-    },
-    {
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ],
       "properties": {
         "hardwareProfile": {
@@ -220,19 +348,19 @@
             }
           }
         },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
-            }
-          ]
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+              }
+            ]
         }
       }
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'),'/metaport-onboard')]",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2019-12-01",
       "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
@@ -240,11 +368,11 @@
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
-        "typeHandlerVersion": "2.1",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/metaport-standalone-private-v1.0/azure_custom_script_mp_install.sh"
+            "https://raw.githubusercontent.com/willguibr/azure/main/Latest/MetaPort-Standalone-NATGW-v4.0/azure_custom_script_mp_install.sh"
           ]
         },
         "protectedSettings": {
@@ -254,4 +382,3 @@
     }
   ]
 }
-  
