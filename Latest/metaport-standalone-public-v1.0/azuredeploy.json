@@ -77,6 +77,9 @@
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+    "publicIPAddressName": "[concat(variables('vmName'), '-publicip')]",
+    "publicIPAddressType": "Dynamic",
     "addressPrefix": "10.0.0.0/16",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
@@ -84,10 +87,7 @@
     "imageOffer": "UbuntuServer",
     "subnetPrefix": "10.0.0.0/24",
     "storageAccountType": "Standard_LRS",
-    "publicIPAddressName": "publicIP",
-    "publicIPAddressType": "Dynamic",
     "location": "[resourceGroup().location]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -290,5 +290,10 @@
         }
       }
     }
-  ]
+  ],
+ "outputs": {
+   "ssh-command": {
+     "type": "string", "value": "[if(equals(variables('publicIPAddressName'), 'none'), 'no public ip, vnet access only', concat('ssh ', parameters('adminUsername'), '@', reference(resourceId(resourceGroup().name, 'Microsoft.Network/publicIPAddresses', variables('publicIPAddressName')), '2018-04-01').dnsSettings.fqdn))]"
+  }
+ }
 }
