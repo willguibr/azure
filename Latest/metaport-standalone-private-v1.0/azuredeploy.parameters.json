@@ -5,12 +5,6 @@
     "vmName": {
       "value": "GEN-UNIQUE-10"
     },
-    "adminUsername": {
-      "value": "GEN-UNIQUE"
-    },
-    "adminPasswordOrKey": {
-      "value": "GEN-SSH-PUB-KEY"
-    },
     "virtualMachineSize": {
       "value": "Standard_D2s_v3"
     },
@@ -20,6 +14,13 @@
     "subnetName": {
       "value": "GET-PREREQ-subnet1Name"
     },
+    "adminUsername": {
+      "value": "GEN-UNIQUE"
+    },
+    "adminPasswordOrKey": {
+      "value": "GEN-SSH-PUB-KEY"
+    },
+
     "metaTokenCode": {
       "value": "GEN-PASSWORD"
     }
