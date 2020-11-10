@@ -23,14 +23,15 @@
       }
     },
     "virtualNetworkName": {
-      "type": "string",
+      "type": "String",
+      "defaultValue": "meta-Vnet",
       "metadata": {
-        "description": "VNET Name"
+        "description": "Name of the virtual network"
       }
     },
     "subnetName": {
       "type": "String",
-      "defaultValue": "meta-Subnet",
+      "defaultValue": "subnetName",
       "metadata": {
         "description": "Name of the subnet for virtual network"
       }
@@ -69,7 +70,8 @@
     "vmName": "[concat(parameters('vmName'), '-vm')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "subnetName": "[parameters('subnetName')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]",
+    "virtualNetworkName": "[parameters('virtualNetworkName')]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
     "imagePublisher": "Canonical",
@@ -159,6 +161,9 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
       "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
       "properties": {
         "ipConfigurations": [
           {
@@ -166,7 +171,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetRef'))]"
+                "id": "[variables('subnetRef')]"
               }
             }
           }
