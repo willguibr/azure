@@ -94,13 +94,6 @@
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
       }
     },
-    "SSHInboundMgmt": {
-      "type": "String",
-      "defaultValue": "0.0.0.0/0",
-      "metadata": {
-        "description": "Source Allowed to manage the MetaPort"
-      }
-    },
     "metaTokenCode": {
       "type": "securestring",
       "metadata": {
@@ -117,7 +110,6 @@
       }
     ],
     "vmName": "[concat(parameters('vmName'), '-vm')]",
-    "SSHInboundMgmt": "[parameters('SSHInboundMgmt')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
@@ -246,7 +238,10 @@
               }
             }
           }
-        ]
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('networkSecurityGroupName'))]"
+        }
       }
     },
     {
@@ -265,7 +260,7 @@
               "direction": "Inbound",
               "destinationPortRange": "22",
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[variables('SSHInboundMgmt')]",
+              "sourceAddressPrefix": "*",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
             }
