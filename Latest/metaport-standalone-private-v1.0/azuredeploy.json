@@ -67,10 +67,11 @@
     }
   },
   "variables": {
+    "existingVirtualNetworkResourceGroup": "[resourceGroup().name]",
+    "existingVirtualNetworkName": "[concat(parameters('virtualNetworkName'))]",
     "vmName": "[concat(parameters('vmName'), '-vm')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
-    "subnetName": "[parameters('subnetName')]",
-    "virtualNetworkName": "[parameters('virtualNetworkName')]",
+    "subnetRef": "[resourceId(variables('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('existingVirtualNetworkName'), parameters('subnetName'))]",
     "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
     "imagePublisher": "Canonical",
@@ -161,7 +162,7 @@
       "name": "[variables('nicName')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), 'Subnet')]",
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('subnetRef'))]",
         "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ],
       "properties": {
@@ -170,7 +171,7 @@
             "name": "ipconfig1",
             "properties": {
               "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+                "id": "[variables('subnetRef')]"
               },
               "privateIPAllocationMethod": "Dynamic"
             }
