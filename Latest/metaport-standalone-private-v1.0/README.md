@@ -1,22 +1,8 @@
 # Standalone MetaPort Deployment for Azure Cloud
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fwillguibr%2Fazure%2Fmain%2FLatest%2FMetaPort-Standalone-NATGW-v4.0%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fwillguibr%2Fazure%2Fmain%2FLatest%2Fmetaport-standalone-private-v1.0%2Fazuredeploy.json)
 
-[![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fwillguibr%2Fazure%2Fmain%2FLatest%2FMetaPort-Standalone-NATGW-v4.0%2Fazuredeploy.json)
-
-This template deploys a single **MetaPort appliance**, a **NAT gateway** and virtual network with a single subnet and public IP resource for the NAT gateway.
-
-## Overview and deployed resources
-
-This template is a resource manager implementation of a quickstart for deploying a standalone MetaPort Appliance on a private subnet, behind a NAT gateway. A virtual network is deployed with a single subnet. The NAT gateway resource is associated with this subnet. A single public IP resource is created for the NAT gateway.  
-
-For more information on **Virtual Network NAT** service and **NAT gateway** see:
-
-* [What is Virtual Network NAT?](https://docs.microsoft.com/azure/virtual-network/nat-overview)
-
-* [Designing virtual networks with NAT gateway resources](https://docs.microsoft.com/azure/virtual-network/nat-gateway-resource)
-
-The following resources are deployed as part of the solution
+[![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fwillguibr%2Fazure%2Fmain%2FLatest%2Fmetaport-standalone-private-v1.0%2Fazuredeploy.json)
 
 ## Note
 1. This template deploys and onboard a single MetaPort Connector into a private subnet into a single zone set.
