@@ -17,7 +17,7 @@
     "virtualNetworkName": {
       "value": "GET-PREREQ-virtualNetworkName"
     },
-    "subnet1Name": {
+    "subnetName": {
       "value": "GET-PREREQ-subnet1Name"
     },
     "metaTokenCode": {

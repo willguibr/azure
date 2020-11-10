@@ -292,10 +292,5 @@
         }
       }
     }
-  ],
- "outputs": {
-   "ssh-command": {
-     "type": "string", "value": "[if(equals(variables('publicIPAddressName'), 'none'), 'no public ip, vnet access only', concat('ssh ', parameters('adminUsername'), '@', reference(resourceId(resourceGroup().name, 'Microsoft.Network/publicIPAddresses', variables('publicIPAddressName')), '2018-04-01').dnsSettings.fqdn))]"
-  }
- }
+  ]
 }

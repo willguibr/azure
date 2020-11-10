@@ -8,20 +8,16 @@
         "description": "This is the unique DNS name of the for the public IP for your VM"
       }
     },
-    "adminUsername": {
-      "type": "string",
-      "metadata": {
-        "description": "This is the username you wish to assign to your VMs admin account"
-      }
-    },
     "virtualMachineSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
       "allowedValues": [
+        "Standard_DS2_v2",
         "Standard_D2s_v3",
+        "Standard_D3s_v2",
         "Standard_DS4_v2",
         "Standard_DS5_v2"
-      ],
+      ], 
       "metadata": {
         "description": "Virtual Machine Size"
       }
@@ -32,10 +28,17 @@
         "description": "VNET Name"
       }
     },
-    "subnet1Name": {
+    "subnetName": {
+      "type": "String",
+      "defaultValue": "meta-Subnet",
+      "metadata": {
+        "description": "Name of the subnet for virtual network"
+      }
+    },
+    "adminUsername": {
       "type": "string",
       "metadata": {
-        "description": "Name of the subnet inside the VNET"
+        "description": "This is the username you wish to assign to your VMs admin account"
       }
     },
     "authenticationType": {
@@ -63,14 +66,16 @@
     }
   },
   "variables": {
-    "nicName": "VMNic",
+    "vmName": "[concat(parameters('vmName'), '-vm')]",
+    "nicName": "[concat(variables('vmName'), '-nic')]",
+    "subnetName": "[parameters('subnetName')]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]",
+    "storageAccountType": "Standard_LRS",
+    "location": "[resourceGroup().location]",
     "imagePublisher": "Canonical",
     "imageVersion": "latest",
     "imageSKU": "18.04-LTS",
     "imageOffer": "UbuntuServer",
-    "storageAccountType": "Standard_LRS",
-    "location": "[resourceGroup().location]",
-    "vmName": "[parameters('vmName')]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
@@ -82,7 +87,7 @@
         ]
       }
     },
-    "networkSecurityGroupName": "meta-NSG"
+    "networkSecurityGroupName": "[concat(variables('vmName'), '-nsg')]"
   },
   "resources": [
 
@@ -161,7 +166,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet1Name'))]"
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetRef'))]"
               }
             }
           }
@@ -171,7 +176,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
-      "apiVersion": "2019-12-01",
+      "apiVersion": "2020-06-01",
       "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
