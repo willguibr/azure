@@ -292,15 +292,5 @@
         }
       }
     }
-  ],
-"outputs": {
-  "publicIPAddress": {
-    "type": "string",
-    "value" : "[reference(variables('publicIPAddressName')).ipAddress]"
-  },
-  "fqdn": {
-    "type": "string",
-    "value": "[if(equals(variables('vmName'), 'metaport'), reference(resourceId('Microsoft.Network/publicIPAddresses', 'publicip')).dnsSettings.fqdn, 'FQDN not available')]"
-    }
-  }
+  ]
 }
