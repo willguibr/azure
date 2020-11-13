@@ -24,14 +24,14 @@
     },
     "virtualNetworkName": {
       "type": "String",
-      "defaultValue": "meta-Vnet",
+      "defaultValue": "",
       "metadata": {
         "description": "Name of the virtual network"
       }
     },
     "subnetName": {
       "type": "String",
-      "defaultValue": "meta-Subnet",
+      "defaultValue": "",
       "metadata": {
         "description": "Name of the subnet for virtual network"
       }

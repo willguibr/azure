@@ -33,14 +33,14 @@
       }
     },
     "virtualNetworkName": {
-      "defaultValue": "meta-Vnet",
+      "defaultValue": "",
       "type": "String",
       "metadata": {
         "description": "Name of the virtual network"
       }
     },
     "subnetName": {
-      "defaultValue": "meta-Subnet",
+      "defaultValue": "",
       "type": "String",
       "metadata": {
         "description": "Name of the subnet for virtual network"
@@ -84,6 +84,7 @@
     },
     "adminUsername": {
       "type": "string",
+      "defaultValue": "ubuntu",
       "metadata": {
         "description": "This is the username you wish to assign to your VMs admin account"
       }
